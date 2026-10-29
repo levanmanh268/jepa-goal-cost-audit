@@ -1,0 +1,54 @@
+{
+ "n": 16,
+ "provenance_failures": [],
+ "PRIMARY_B1_vs_B0": {
+  "decision": "NOT_REPLICATED",
+  "D": [
+   -0.03817217334310766,
+   -0.6121820988091711,
+   0.5296424572059794
+  ],
+  "improved": 7,
+  "worsened": 7,
+  "D_without_most_favourable": 0.143235116292702,
+  "paired_success_gains_losses": [
+   0,
+   2
+  ]
+ },
+ "ADDENDUM_VELDROP_Z_vs_B0": {
+  "decision": "SUPPORTED",
+  "D": [
+   -0.6268835263647281,
+   -1.2984086034432751,
+   -0.10981389738340713
+  ],
+  "improved": 7,
+  "worsened": 1,
+  "D_without_most_favourable": -0.3705409612061954,
+  "paired_success_gains_losses": [
+   1,
+   0
+  ]
+ },
+ "MECHANISM": {
+  "decision": "REPLICATED",
+  "mean_spearman_prop_agent": 0.4330700549450549,
+  "mean_spearman_proppos_agent": 0.9543297847985346,
+  "mean_velocity_share_of_prop": 0.644595673933199
+ },
+ "success_counts": {
+  "B0": 8,
+  "B1": 6,
+  "HPROP10": 5,
+  "HPROP_STD": 4,
+  "TPE": 8,
+  "POW": 9,
+  "FIXEDMASK": 8,
+  "E_B0": 7,
+  "E_B1": 7,
+  "VELDROP_Z": 9,
+  "POS_ONLY": 7,
+  "VELDROP_01": 8
+ }
+}

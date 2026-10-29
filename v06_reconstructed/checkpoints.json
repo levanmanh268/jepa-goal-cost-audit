@@ -1,0 +1,12 @@
+{
+  "jepa_wm_pusht": {
+    "url": "https://dl.fbaipublicfiles.com/jepa-wms/pt_jepa-wm.pth.tar",
+    "sha256": "9beca3eafe0739c3b3adb5d734fa435ccbda0fea8a65d53d4cccec176aaaa0eb",
+    "bytes": 211639615
+  },
+  "dino_wm_pusht": {
+    "url": "https://dl.fbaipublicfiles.com/jepa-wms/pt_dino-wm.pth.tar",
+    "sha256": "8ec9cb05f22812d7f12e3c216b0637f41641055c0653e503e2746edb981b550f",
+    "bytes": 274877419
+  }
+}

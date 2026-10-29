@@ -1,0 +1,15 @@
+26 development starts, 21 trajectories (leave-one-trajectory-out CV)
+rule                                           all26 succ | R6 train16 R6 test10
+official                                       3.845    7 |      3.522     4.363
+hprop_std (label-free)                         3.316    6 |      3.001     3.820
+CFE[vis,prop] (LOTO-CV)                        3.311    6 |      2.931     3.919
+CFE[vis,prop,tail2] (LOTO-CV)                  3.466    7 |      3.002     4.210
+CFE[vis,prop,tail8] (LOTO-CV)                  3.505    8 |      3.181     4.024
+CFE[vis,prop,tail2,tail8,pow8] (LOTO-CV)       3.445    7 |      3.087     4.019
+B1-type signed FA ridge (lam=1) (LOTO-CV)      3.468    7 |      3.255     3.809
+mean CFE weights over folds (natural units): {"CFE[vis,prop]": [1.636, 7.956], "CFE[vis,prop,tail2]": [0.0, 6.0459, 0.5953], "CFE[vis,prop,tail8]": [0.0, 6.2005, 0.6953], "CFE[vis,prop,tail2,tail8,pow8]": [0.0, 6.035, 0.3293, 0.3397, 0.0]}
+label budget (CFE[vis,prop,tail8], fit on m trajectories, evaluated on the remaining starts; 50 draws):
+  m=1: mean D vs official -0.435 (5-95%: -0.710, -0.199); mean success diff -0.84
+  m=2: mean D vs official -0.434 (5-95%: -0.707, -0.214); mean success diff +0.04
+  m=4: mean D vs official -0.406 (5-95%: -0.650, -0.164); mean success diff +0.64
+  m=8: mean D vs official -0.402 (5-95%: -0.655, -0.202); mean success diff +0.56

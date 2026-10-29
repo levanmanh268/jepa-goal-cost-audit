@@ -1,0 +1,484 @@
+\section{Introduction}
+Goal-conditioned latent world models such as DINO-WM, JEPA-WM and LeWM plan by searching for actions whose predicted
+terminal latent is close to the latent of a goal observation \cite{zhou2024dinowm,terver2025jepawm,maes2026lewm}. A
+growing literature asks why such planners fail although their one-step predictions are accurate, pointing to latent
+geometry that does not respect task costs \cite{li2026trm,kang2026aniso,jang2026projection}, insensitivity to small or
+action-driven changes \cite{strohm2026little,hara2026criterion}, and prediction errors that matter for some components
+but not others \cite{min2026misleads}.
+
+I examine a mismatch between the goal representation and the success criterion. The general problem is well known. Goal-conditioned
+reinforcement learning has long defined goals on the part of the state that decides success, for example object
+positions without velocities \cite{andrychowicz2017her}; full-state goals are known to over-constrain learning through
+nuisance coordinates such as velocities \cite{velez2026gsher}; and a recent latent world model keeps velocity out of its
+terminal goal cost by construction \cite{wu2026firm}. I show where this mismatch enters a released planner, measure its contribution to the goal cost, and evaluate an
+analytic correction inside the search.
+
+\paragraph{Contributions and scope}
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+\item An audit of the proprioceptive goal term of the released JEPA-WM PushT planner on its own candidates: an exact
+  five-part decomposition (position, velocity, cross term, residual outside the encoder's range, token variation), the
+  share of each part, its rank correlation with the decision-relevant distance, and the numerical conditioning of the
+  decomposition (Section~\ref{sec:audit}).
+\item VELDROP-z, an analytic, training-free repair that keeps only the decoded position part and standardises it
+  against the visual term (Section~\ref{sec:method}).
+\item Evaluations on PushT, first with fixed candidate banks and then inside CEM, including a comparison at a
+  shared frozen weight on \RTwN{} fresh starts. DINO-WM provides a boundary case where the proposed velocity mechanism
+  was not supported (Section~\ref{sec:results}).
+\item Negative results that bound the claim: a frozen supervised scoring head that had transferred between development
+  cohorts failed on the evaluation goals and degraded the search, and up-weighting the full proprioceptive term lost
+  successes in fixed banks (Section~\ref{sec:negative}).
+\end{enumerate}
+This is an exploratory study of planning costs on one task. The repair does not change the world-model
+architecture. Restricting a goal cost to task-relevant coordinates has close precedents
+\cite{andrychowicz2017her,velez2026gsher,wu2026firm,li2026trm,jang2026projection}.
+
+\section{Related work}
+\paragraph{Planning costs for latent world models} TRM learns terminal costs on frozen latents; a decoded $xy$ cost, or
+the latent distance restricted to the $xy$ row space, repairs TwoRoom planning, and costs are combined after
+standardising them within the candidate set \cite{li2026trm}. Latent Projection restricts the cost to the most
+dynamics-certain directions of a SIGReg latent \cite{jang2026projection}. LEAP adds a terminal-descriptor energy from a
+labelled decoder \cite{pham2026leap}. Learned temporal distances, manifold distances and value-shaped costs replace the
+Euclidean goal distance \cite{moukheiber2026tempo,you2026ngc,destrade2026value}. AnisoWM shows that an isotropic latent
+induces a metric in state space that can disagree with the task cost \cite{kang2026aniso}. Here I focus on a specific source of mismatch: a goal attribute that the success criterion ignores but the
+released planner penalises through its proprioceptive channel.
+
+\paragraph{Criterion alignment and diagnosis} Supervising success-criterion quantities during training helps on PushT,
+whose release-specific criterion includes the agent position \cite{hara2026criterion}. Min et al.\ separate
+representation, prediction and decision failures with matched candidates \cite{min2026misleads}; DA-LeWM measures
+latent-physical rank agreement along CEM stages \cite{wang2026dalewm}. The audit here follows the same matched-candidate
+logic.
+
+\paragraph{Goal specification} Hindsight experience replay defines goals through a map from states to the coordinates
+that decide success, such as the object position, while the state also contains velocities \cite{andrychowicz2017her}.
+GS-HER shows that full-state goals over-constrain offline goal-conditioned learners through nuisance coordinates,
+velocities included, and masks them with a coordinate query \cite{velez2026gsher}. FIRM-WM separates a goal-comparable
+configuration from a dynamic state used only for prediction and excludes the latter from the terminal cost
+\cite{wu2026firm}. These works establish the principle and design around it; I audit released planners whose default
+cost includes such a coordinate and repair their cost without retraining.
+
+\section{Setting and protocol}
+\label{sec:setting}
+\paragraph{Task and model} I use a reduced-budget protocol based on the released JEPA-WM PushT evaluator (repository
+commit \texttt{13cf1d9c}) with the released JEPA-WM checkpoint (hash-verified), on CPU \cite{terver2025jepawm}.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{Episodes.} An episode starts from a state of a dataset trajectory; the goal is the state reached by
+  replaying the next 30 recorded actions.
+\item \emph{Success.} The evaluator of this release (inherited from DINO-WM \cite{zhou2024dinowm}) declares success when
+  the Euclidean norm of the (agent $xy$, block $xy$) error is below 20 and the wrapped block-angle error is below
+  $\pi/9$. This is the release's criterion, not a universal PushT metric \cite{chi2023diffusionpolicy}. I report a
+  continuous extension, the margin $\max(\text{pos}/20,\ \text{ang}/(\pi/9))$; success holds iff it is below 1.
+\item \emph{Cost and search.} The planner minimises $c=L_{\mathrm{vis}}+0.1\,\Pi$, where $L_{\mathrm{vis}}$ is the mean
+  squared error over $16\times16$ DINOv2 patches of 384 channels and $\Pi$ the mean squared error of the
+  proprioceptive embedding, with the cross-entropy method (CEM) at 64 samples, 8 iterations and 10 elites (the release
+  uses $300\times30$).
+\end{itemize}
+
+\paragraph{Two evaluation modes} \emph{Fixed banks:} for each start, 64 plans are drawn from the final CEM Gaussian of
+the official-cost planner and executed; each cost selects its lowest-scoring plan, whose executed margin and success are then reported. \emph{Inside the search:} the rule replaces the CEM objective (z-scores, where used, are computed
+within each 64-sample population), and the final CEM mean is executed open loop.
+
+\paragraph{Data use, locks and decisions} Initial design used 26 starts from the validation split. The 16-goal JEPA-WM
+evaluation cohort and the eight-goal DINO-WM cohort use distinct trajectories from the checkpoints' \emph{training}
+split: they were held out from cost design, not from checkpoint training. Later diagnostics and the in-search factorial
+reused the JEPA-WM goals, so I treat that sequence as exploratory development. A further cohort of \RTwN{} starts, from
+distinct training-split trajectories that no earlier cohort used, was drawn and locked before its runs
+(Section~\ref{sec:r12}). Protocols and analysis code were
+hash-recorded, and the execution log records their upload to a project store before the corresponding analyses; these
+records are not an immutable public registration. The VELDROP-z addendum was recorded after three of 16 banks had been
+collected; according to the execution log, none of their outcomes had been inspected (Appendix~\ref{app:locks}). A rule
+``helps'' when its mean paired difference $D$ is at most $-0.10$, its success count is not lower than the reference's,
+and its mean $D$ without the most favourable start is at most zero. These are operational priority rules, not tests
+controlling type-I error. Intervals are percentile bootstraps over starts; exact two-sided McNemar and sign tests are
+descriptive. There is one keyed CEM seed per start, so planner-seed variability is not separately estimated.
+
+\section{What the proprioceptive goal term measures}
+\label{sec:audit}
+In the JEPA-WM PushT model the proprioceptive state is $r=(p,v)\in\mathbb{R}^4$, the agent's position and velocity in
+normalised coordinates. It is embedded by $e(r)=Wr+b$ with $W=[W_p\;W_v]\in\mathbb{R}^{16\times4}$, and the predictor
+outputs $T=256$ proprioceptive tokens. The goal is an expert frame thirty steps ahead, and its recorded velocity is
+usually far from zero (median speed \DevGoalSpeed{} simulator units per second on the development goals).
+
+\paragraph{Exact decomposition} For a candidate, let $d_i$ be the difference between predicted and goal token $i$,
+$h=\frac1T\sum_i d_i$, $\delta r=W^{+}h$, $u=W_p\,\delta r_p$, $w=W_v\,\delta r_v$ and $\rho=h-W\delta r$, which is
+orthogonal to the range of $W$. Then, with $m=16$,
+\begin{align}
+\Pi&=\frac{1}{Tm}\sum_i\|d_i\|^2\nonumber\\
+&=\frac{\|u\|^2+\|w\|^2+2\langle u,w\rangle}{m}\nonumber\\
+&\quad+\frac{\|\rho\|^2}{m}+\frac{1}{Tm}\sum_i\|d_i-h\|^2,
+\label{eq:decomp}
+\end{align}
+the five parts being position, velocity, cross term, residual and token variation.
+The identity follows from least-squares orthogonality and the decomposition of each token into its mean and
+residual. It holds even when the predicted tokens lie outside the encoder's range.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\auditfigwidth]{fig_audit.pdf}
+\caption{Within each of the \REightN{} evaluation banks (64 candidates of the released JEPA-WM planner), rank of the
+position part (left) and of the velocity part (right) of the proprioceptive goal term against the rank of the true
+final agent distance. The velocity part has near-zero mean within-bank rank correlation with the final agent distance;
+this does not imply statistical independence or absence of information (post hoc, descriptive).}
+\label{fig:audit}
+\end{figure}
+
+\paragraph{Measurements} On the 64-plan evaluation banks of the \REightN{} evaluation goals (post hoc, descriptive;
+numerical identity error below $10^{-14}$):
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item mean over banks of each part's within-bank mean divided by the within-bank mean of $\Pi$: position \DecJPos,
+  velocity \DecJVel, cross term \DecJCross, residual and token variation together \DecJResTok;
+\item mean within-bank Spearman correlation with the true final agent distance: \DecJSpFull{} for $\Pi$, \DecJSpPos{}
+  for the position part and \DecJSpVel{} for the velocity part.
+\end{itemize}
+Velocity mismatch is thus a large part of this proprioceptive term, with near-zero \emph{average} monotone association
+with the agent distance (Fig.~\ref{fig:audit}). Bank-level correlations range from \DecJSpVelMin{} to \DecJSpVelMax{};
+a near-zero average neither establishes independence nor concerns every component of the success criterion. Pooling
+the energies of all banks gives a velocity share of \DecJVelPooled{}, distinct from the equal-bank average of
+\DecJVel. On the development banks, the predicted and encoded-true values of $\Pi$ have within-bank rank correlation
+\DevSpPredTrue: the ranking problem is already present when the term is evaluated on true endpoints. This does not
+establish that physical prediction errors are small, and I do not apportion all planning failures among prediction,
+objective and search.
+
+\paragraph{Conditioning} Keeping the position part is the map $h\mapsto Ah$ with $A=W_p\,[I\;0]\,W^{+}$, an
+\emph{oblique} projector onto the range of $W_p$ along the range of $W_v$ and the orthogonal complement of the range of
+$W$. Its operator norm is $1/\sin\theta$, where $\theta$ is the smallest principal angle between the ranges of $W_p$ and
+$W_v$, a classical fact about oblique projectors \cite{simoncini2010oblique}. Both stored encoder matrices have full
+column rank. For JEPA-WM, $\theta=\AngJ^\circ$ and $\|A\|=\GainJ$ (condition number of $W$: \CondJ), so the
+decomposition is numerically benign. Section~\ref{sec:r10} shows that this is not so for DINO-WM.
+
+\section{The repair}
+\label{sec:method}
+VELDROP-z scores a candidate by
+\begin{equation}
+s=z(L_{\mathrm{vis}})+z(\Pi_{\mathrm{pos}}),\qquad \Pi_{\mathrm{pos}}=\|u\|^2/m,
+\end{equation}
+where $z(x)=(x-\bar x)/(\operatorname{sd}(x)+10^{-12})$ uses the population standard deviation over the current
+candidate set. It uses no outcome labels at inference. It retains only the position energy of Eq.~\eqref{eq:decomp},
+so it removes the cross, residual and token-variation terms as well as the pure velocity term. Because $AW_v=0$, the
+score is invariant to a velocity-only change of the goal embedding when the predicted tokens and the visual goal are
+held fixed; this algebraic invariance is not by itself a claim of better control. Its only inputs beyond the official
+cost are the model's proprioceptive encoder and a declared goal-coordinate schema (which entries of $r$ are
+velocities).
+
+I selected the rule and its weighting on the development starts, where VELDROP-z gave \DevVZ{} with \DevVZSucc{}
+successes against \DevOff{} and \DevOffSucc{} for the official cost; these are design-set results, not independent estimates of performance.
+Development ablations also showed that dropping velocity at the official weight changes almost nothing (\DevVOne{} against \DevOff), that
+standardising the full term loses successes (\DevHstdSucc{} against \DevOffSucc), and that replacing the goal velocity
+by zero is worse than dropping it (\DevVzero, \DevVzeroSucc{} successes). The evaluations below keep the rule fixed, although earlier results informed its design. They also evaluate the
+frozen supervised head of an earlier development round, a ridge-regression score over the 384 visual channel energies
+and the proprioceptive energy fitted to development margins; it is not retrained here.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Fixed candidate banks on evaluation goals}
+\label{sec:r8}
+The primary hypothesis of this locked test was the frozen supervised head against the official cost; VELDROP-z and a
+mechanism check were added as a separate locked hypothesis (Appendix~\ref{app:locks}). Table~\ref{tab:r8} gives the
+results on \REightN{} evaluation goals.
+
+\begin{table}[t]
+\centering
+\caption{Fixed-bank selection on \REightN{} evaluation goals (64-plan banks): mean selected margin (lower is better)
+with bootstrap interval, and successes.}
+\label{tab:r8}
+\footnotesize
+\begin{tabular}{lcc}
+\toprule
+Selection rule & margin [95\% CI] & succ. \\
+\midrule
+official cost & \REightBzero{} [\REightBzeroLo, \REightBzeroHi] & \REightBzeroSucc \\
+\textbf{VELDROP-z} & \textbf{\REightVZ{}} [\REightVZLo, \REightVZHi] & \textbf{\REightVZSucc} \\
+supervised head (frozen) & \REightBone & \REightBoneSucc \\
+proprio weight 10 (not 0.1) & \REightHten & \REightHtenSucc \\
+standardised full proprio term & \REightHstd & \REightHstdSucc \\
+position term only & \REightPosOnly & \REightPosOnlySucc \\
+velocity dropped at weight 0.1 & \REightVOne & \REightVOneSucc \\
+official cost, true endpoints & \REightEBzero & \REightEBzeroSucc \\
+best plan in bank & \REightOracle & \REightOracleSucc \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{VELDROP-z improves fixed-bank selection.} $D=\REightVZD$ [\REightVZDLo, \REightVZDHi]; \REightVZImp{} starts improved,
+  \REightVZWor{} worsened; without the most favourable start the mean is \REightVZDexcl. Successes went from
+  \REightBzeroSucc{} to \REightVZSucc{} (\REightVZGain{} gained, \REightVZLoss{} lost; McNemar $p=\McNREight$), which equals
+  the number of banks that contain a success: no reranking of these banks can do better on successes.
+\item \emph{The position term ranks agent distance more accurately.} The position part's Spearman correlation with the agent distance
+  (\REightSpPos) exceeds the full term's (\REightSpProp).
+\item \emph{The frozen supervised head does not improve selection} ($D=\REightBoneD$; successes \REightBzeroSucc{} to \REightBoneSucc).
+\end{itemize}
+
+\paragraph{Fixed-bank ablations (post hoc)} Crossing the proprioceptive quantity (full or position)
+with the weight rule (fixed 0.1 or standardised) on the same banks gives margins (successes): full at 0.1, \FacRaCzz{}
+(\FacRaCzzSucc); position at 0.1, \FacRaCoz{} (\FacRaCozSucc); full standardised, \FacRaCzo{} (\FacRaCzoSucc); position
+standardised, \FacRaCoo{} (\FacRaCooSucc). Neither change alone meets the operational improvement rule on these banks; their combination does. Position against
+full under standardisation: $D=\FacRaDropD$, successes \FacRaDropGain{} gained and \FacRaDropLoss{} lost (McNemar $p=\FacRaDropMcN$). Using the standardisation scale of the full term for the position term gives \FacRaSA{}
+(\FacRaSASucc), so in the banks the gain does not come from a different scale alone. These contrasts were computed
+after the outcomes were known.
+
+\subsection{Inside the search}
+\label{sec:r9}
+I locked a second test on the same goals: CEM optimises VELDROP-z (or the frozen head) with the seeds of the
+official-cost CEM, and the final mean is executed. The official-cost arm is the collection's own CEM, reproduced
+bit-exactly by a rerun on the first start. Table~\ref{tab:r9} gives the results.
+
+\begin{widetable}[t]
+\centering
+\caption{The score used as the CEM objective, \RNineN{} goals (same goals as Table~\ref{tab:r8}); final CEM mean
+executed open loop. Mean executed margin with bootstrap interval, successes, block-only successes and mean errors.}
+\label{tab:r9}
+\small
+\begin{tabular}{lccccc}
+\toprule
+CEM objective & margin [95\% CI] & succ. & block only & agent err. & block err. \\
+\midrule
+official cost & \RNineBzeroMargin{} [\RNineBzeroMarginLo, \RNineBzeroMarginHi] & \RNineBzeroSucc & \RNineBzeroBlockOnly & \RNineBzeroAgent & \RNineBzeroBlock \\
+\textbf{VELDROP-z} & \textbf{\RNineVZMargin{}} [\RNineVZMarginLo, \RNineVZMarginHi] & \textbf{\RNineVZSucc} & \RNineVZBlockOnly & \RNineVZAgent & \RNineVZBlock \\
+supervised head (frozen) & \RNineBoneMargin{} [\RNineBoneMarginLo, \RNineBoneMarginHi] & \RNineBoneSucc & \RNineBoneBlockOnly & \RNineBoneAgent & \RNineBoneBlock \\
+\bottomrule
+\end{tabular}
+\end{widetable}
+
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{VELDROP-z lowers executed margin inside CEM.} $D=\RNineVZD$ [\RNineVZDLo, \RNineVZDHi]; \RNineVZImp{} starts improved and
+  \RNineVZWor{} worsened (sign test $p=\SignRNine$); without the most favourable start \RNineVZDexcl. Successes
+  \RNineBzeroSucc{} to \RNineVZSucc, with \RNineVZGain{} gained and \RNineVZLoss{} lost (McNemar $p=\McNRNine$): the success-count difference is uncertain at this sample size. The largest reduction of position
+  error is for the agent (\RNineBzeroAgent{} to \RNineVZAgent; block-only successes unchanged). This is consistent with
+  the proposed explanation but does not isolate its causal contribution.
+\item \emph{The supervised head degrades in-search performance.} $D=\RNineBoneD$; successes \RNineBzeroSucc{} to \RNineBoneSucc{}
+  (\RNineBoneGainN{} gained, \RNineBoneLossN{} lost). Its executed plan scored \emph{worse under the head itself} than
+  the official-cost plan on \BoneOwnWorse{} of \BoneOwnN{} starts (mean predicted head score \BoneOwnBone{} versus
+  \BoneOwnBzero). Finite-budget search thus did not uniformly improve even this objective over a known feasible
+  comparator; that observation alone does not explain the loss of executed successes or separate ranking error from
+  optimisation.
+\end{itemize}
+
+\paragraph{Retained component and weighting inside CEM} VELDROP-z changes two things at
+once: it keeps only the position part, and it replaces the fixed weight 0.1 by standardisation within each
+population. I therefore ran the two missing cells of the $2\times2$ design on the same goals and seeds, under a
+protocol locked before these runs: the full term standardised, $z(L_{\mathrm{vis}})+z(\Pi)$, and the position part at
+the official weight, $L_{\mathrm{vis}}+0.1\,\Pi_{\mathrm{pos}}$. A rerun of the official-cost search on the first start
+again reproduced the stored plan bit-exactly. Table~\ref{tab:r11} gives the four cells.
+
+\begin{table}[t]
+\centering
+\caption{The $2\times2$ factorial inside CEM on the \RElN{} goals of Table~\ref{tab:r9}: mean executed margin (lower is
+better), successes and mean final agent error. The full term and the position part at weight 0.1 versus standardised
+within each population.}
+\label{tab:r11}
+\footnotesize
+\begin{tabular}{lccc}
+\toprule
+proprio quantity, weight & margin & succ. & agent err. \\
+\midrule
+full, 0.1 (official) & \RElCzz & \RElCzzSucc & \RElCzzAgent \\
+position, 0.1 & \RElCoz & \RElCozSucc & \RElCozAgent \\
+full, standardised & \RElCzo & \RElCzoSucc & \RElCzoAgent \\
+position, standardised (VELDROP-z) & \RElCoo & \RElCooSucc & \RElCooAgent \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{Standardising the full term gives the larger contrast on this cohort.} It lowered the executed margin by
+  \RElScaleFull{} [\RElScaleFullLo, \RElScaleFullHi] relative to the official cost (\RElScaleFullImp{} starts improved,
+  \RElScaleFullWor{} worsened) but left successes unchanged (\RElScaleFullGain{} gained, \RElScaleFullLoss{} lost).
+  Within each population its ranking is that of $L_{\mathrm{vis}}+\alpha_t\Pi$ with
+  $\alpha_t=(\operatorname{sd}(L_{\mathrm{vis}})+10^{-12})/(\operatorname{sd}(\Pi)+10^{-12})$. Across the \RElNPop{}
+  search populations of this arm, $\alpha_t$ averages \RElAlphaFull{} (range \RElAlphaFullMin-\RElAlphaFullMax),
+  about \RElEffFold{} times the official 0.1 on average; it is not a fixed weight.
+\item \emph{The standardised position-only rule has \RElGain{} more successes than the standardised full rule.} In the
+  pre-specified primary contrast, the position part against the full term under standardisation
+  gave $D=\RElD$ [\RElDLo, \RElDHi] (median \RElMedian; \RElImp{} improved, \RElWor{} worsened; without the most
+  favourable start \RElDexcl) and \RElGain{} additional successes with \RElLoss{} lost (McNemar $p=\RElMcN$). The operational
+  rule is met, but the interval reaches zero and the success difference is not significant, so this is weak evidence.
+  The contrast changes both the retained component and its own standardisation denominator; it is not an intervention
+  on velocity at a fixed numerical weight.
+\item \emph{At the official weight, the position-only contrast is uncertain} ($D=\RElSecD$ [\RElSecDLo,
+  \RElSecDHi]; successes \RElSecGain{} gained, \RElSecLoss{} lost), as in the fixed banks. This is consistent with the
+  scales logged in this arm: at weight 0.1, the position term's standard deviation within a search population is on
+  average \RElVOnePosRatio{} times smaller than the visual term's, and at least \RElVOnePosRatioMin{} times smaller in
+  every population. Interaction \RElInter{} [\RElInterLo, \RElInterHi].
+\end{itemize}
+The path from full at 0.1, to standardised full, to standardised position has margin changes \RElScaleFull{} and
+\RElD, summing to \RNineVZD; the path through position at 0.1 has changes \RElSecD{} and \RElScalePos. Neither path is a
+causal allocation of the total gain. The same holds for successes: the four extra successes of VELDROP-z appear in the
+last step of either path, so they cannot be attributed to velocity removal alone. Isolating the retained component
+requires a comparison at one weight frozen from a shared initial candidate population; Section~\ref{sec:r12} reports
+one, and repeats this factorial contrast, on a fresh cohort. Finally, the fixed-bank
+experiment selects among raw-planner candidates, whereas the in-search experiment changes those candidates and executes
+an elite mean, so different outcomes in the two modes need not conflict.
+
+\subsection{A fresh cohort}
+\label{sec:r12}
+To repeat the in-search tests on goals that played no earlier role, I locked a test on \RTwN{} new starts. Each start
+runs CEM arms with the same seed, so all arms share the first population $Q_0$: the official cost, VELDROP-z,
+$L_{\mathrm{vis}}+\alpha_0\Pi$ and $L_{\mathrm{vis}}+\alpha_0\Pi_{\mathrm{pos}}$. Here $\alpha_0=(\operatorname{sd}(L_{\mathrm{vis}})+10^{-12})/
+(\operatorname{sd}(\Pi)+10^{-12})$ is computed once on $Q_0$ and frozen for all iterations; it averages
+\RTwAlphaMean{} (range \RTwAlphaMin-\RTwAlphaMax), about \RTwAlphaFold{} times the official 0.1. The primary question
+was the frozen-weight comparison of the two terms; VELDROP-z against the official cost was a pre-declared secondary
+question. After these four arms had been analysed, a fifth arm, the standardised full term $z(L_{\mathrm{vis}})+z(\Pi)$,
+was locked and run on the same starts to repeat the primary contrast of Table~\ref{tab:r11}. Table~\ref{tab:r12} gives
+all five arms.
+
+\begin{table}[t]
+\centering
+\caption{Fresh cohort of \RTwN{} starts; the score is the CEM objective and the final mean is executed open loop. Mean
+executed margin, successes, block-only successes, and mean agent and block errors.}
+\label{tab:r12}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+CEM objective & margin & succ. & block only & agent & block \\
+\midrule
+official cost & \RTwRawMargin & \RTwRawSucc & \RTwRawBO & \RTwRawAgent & \RTwRawBlock \\
+full, frozen $\alpha_0$ & \RTwFFMargin & \RTwFFSucc & \RTwFFBO & \RTwFFAgent & \RTwFFBlock \\
+position, frozen $\alpha_0$ & \RTwFPMargin & \RTwFPSucc & \RTwFPBO & \RTwFPAgent & \RTwFPBlock \\
+full, standardised & \RThMargin & \RThSucc & \RThBO & \RThAgent & \RThBlock \\
+\textbf{VELDROP-z} & \textbf{\RTwVZMargin} & \textbf{\RTwVZSucc} & \RTwVZBO & \RTwVZAgent & \RTwVZBlock \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{VELDROP-z against the official cost (pre-specified secondary).} $D=\RTwQTwoD$ [\RTwQTwoLo, \RTwQTwoHi]
+  (median \RTwQTwoMed; \RTwQTwoImp{} starts improved, \RTwQTwoWor{} worsened; sign test $p=\RTwQTwoSign$; without the most
+  favourable start \RTwQTwoLBO). Successes rose from \RTwRawSucc{} to \RTwVZSucc, with \RTwQTwoGain{} gained and
+  \RTwQTwoLoss{} lost (exact McNemar $p=\RTwQTwoMcN$). This repeats the earlier in-search result on fresh goals. The largest mean error reduction is
+  again for agent placement (agent error \RTwRawAgent{} to \RTwVZAgent), while the mean block error rose from
+  \RTwRawBlock{} to \RTwVZBlock.
+\item \emph{Position against full at the frozen weight (primary).} $D=\RTwQOneD$ [\RTwQOneLo,
+  \RTwQOneHi] (median \RTwQOneMed; \RTwQOneImp{} improved, \RTwQOneWor{} worsened; sign test $p=\RTwQOneSign$; without the
+  most favourable start \RTwQOneLBO), with \RTwQOneGain{} success gained and \RTwQOneLoss{} lost. The operational rule is
+  met, but the interval contains zero. The point estimate favours the position term; the interval also permits a
+  larger gain or a slight degradation. This is not an equivalence test. The contrast removes the cross, residual and token-variation terms together with the velocity term.
+\item \emph{Descriptive contrasts.} Both frozen-weight rules improve on the official cost (full \RTwFFRawD{}
+  [\RTwFFRawLo, \RTwFFRawHi], position \RTwFPRawD{} [\RTwFPRawLo, \RTwFPRawHi]), with one net success each. VELDROP-z
+  improves on the frozen-weight position rule by \RTwVZFPD{} [\RTwVZFPLo, \RTwVZFPHi], with \RTwVZFPGain{} successes
+  gained and \RTwVZFPLoss{} lost.
+\item \emph{Position against full under standardisation (exploratory added arm).} $D=\RThD$ [\RThLo, \RThHi] (median
+  \RThMed; \RThImp{} improved, \RThWor{} worsened; sign test $p=\RThSign$; without the most favourable start \RThLBO), with
+  \RThGain{} successes gained and \RThLoss{} lost (exact McNemar $p=\RThMcN$). Standardising the full term itself changes the
+  margin by \RThStdRawD{} [\RThStdRawLo, \RThStdRawHi] relative to the official cost, with \RThStdRawGain{} successes
+  gained and \RThStdRawLoss{} lost. Of the \RTwQTwoGain{} starts that VELDROP-z adds over the official cost, two are
+  already successes under the standardised full term.
+\end{itemize}
+On the new cohort, the path from the official cost to standardised full and then to standardised position has
+margin changes \RThStdRawD{} and \RThD{}, respectively. The latter comparison has \RThGain{} success gains and
+\RThLoss{} losses, but its margin interval includes zero. It changes both the retained term and its adaptive
+weighting. At the frozen intermediate weight, the estimated margin difference is uncertain and the success count is
+unchanged. The weight
+that VELDROP-z implicitly gives the position term, $(\operatorname{sd}(L_{\mathrm{vis}})+10^{-12})/
+(\operatorname{sd}(\Pi_{\mathrm{pos}})+10^{-12})$, has a median of \RTwVZWFirst{} in the first population and \RTwVZWLast{} in the
+last (post hoc), whereas $\alpha_0$ stays at its initial value. One reading, not tested here, is that the
+velocity-related terms matter mainly when proprioception carries a large weight. As before, the standardised contrast
+also changes the standardisation denominator, so no path through these arms is a causal allocation of the total gain.
+
+\subsection{A second released model}
+\label{sec:r10}
+DINO-WM uses the same frozen DINOv2 encoder, its own predictor, a $\mathrm{Linear}(4\to20)$ proprioceptive encoder, and
+a goal cost of the same form. I locked an unchanged VELDROP-z test on \RTenN{} new training-split goals (fixed banks).
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{Selection improves slightly, with unchanged successes.} \RTenVZ{} against \RTenBzero{} ($D=\RTenVZD$; \RTenVZImp{} improved,
+  \RTenVZWor{} worsened, \RTenUnchanged{} unchanged; sign test $p=\SignRTen$). With five zero differences, a bootstrap
+  resample consists only of zeros with probability \BootZeroRTen, so the percentile interval is not strong evidence.
+  The official cost and both standardised rules attain the same \RTenBzeroSucc{} successful banks.
+\item \emph{Velocity mismatch is small in DINO-WM.} Velocity carries \DecDnVel{} of the proprioceptive term (position
+  \DecDnPos), and the full term already ranks candidates by the agent distance (Spearman \DecDnSpFull).
+\end{itemize}
+DINO-WM's encoder is much less sensitive to velocity in normalised coordinates: its velocity columns have norms
+\EncDinoVx{} and \EncDinoVy, against \EncDinoX{} and \EncDinoY{} for position. They are also nearly parallel to the
+position columns ($\theta=\AngDn^\circ$, condition number \CondDn), so the position-only map amplifies embedding errors
+up to $\|A\|=\GainDn$ times. On these banks VELDROP-z selected the same plan as the standardised full term on
+\SameSelDino{} of \SameSelDinoN{} starts: re-weighting the full term reproduces the observed selections, so these banks
+show no incremental selection benefit from dropping the velocity-related terms. Because the stored predictions are
+rounded to 16 bits, I re-scored every DINO-WM evaluation bank in 32 bits (and four JEPA-WM banks as a control). The new
+inference reproduced the stored official costs exactly and, rounded to 16 bits, the stored tokens bit for bit; no
+selection of VELDROP-z, of the standardised full term or of the official cost changed (\FpDnN{} DINO-WM and \FpJN{}
+JEPA-WM banks), and the largest relative change of the position energy was \FpDnMaxRel{} (DINO-WM) and \FpJMaxRel{}
+(JEPA-WM). The precision check leaves the selections unchanged on these banks. The DINO-WM projection remains poorly
+conditioned for perturbations in other directions.
+
+\section{Negative controls}
+\label{sec:negative}
+The frozen supervised scoring head had shown a favourable transfer estimate in earlier development, yet it produced \REightBoneSucc{} successes in the JEPA-WM fixed banks against \REightBzeroSucc{} for the
+official cost, and \RNineBoneSucc{} against \RNineBzeroSucc{} inside CEM. Increasing the full proprioceptive weight
+from 0.1 to 10 (100-fold), or standardising the full term, lowered the mean margin but lost successes in fixed banks
+(Table~\ref{tab:r8}); inside CEM, standardising the full term lowered the margin while keeping the success count at
+\RElCzoSucc{} (\RElScaleFullGain{} gain, \RElScaleFullLoss{} loss). Aggregate rank correlations and fixed-bank outcomes
+therefore cannot substitute for evaluating a cost inside the search. Two training-free visual energies from earlier
+rounds also failed their own locked tests: an optimal-transport patch energy was refuted by its mechanism probe, and
+tail pooling of patch errors gave $D=\RSevenTpeD$ [\RSevenTpeDLo, \RSevenTpeDHi]. I report these failures alongside the
+positive rule.
+
+\section{Limitations}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{Scope.} One task; two released checkpoints; CEM at $64\times8$ rather than $300\times30$; one open-loop plan
+  rather than receding-horizon control.
+\item \emph{Dependence and statistics.} The fixed-bank, in-search and factorial tests use the same \REightN{} goals and
+  are not independent replications; the fresh cohort of \RTwN{} starts is the only repetition on new goals, and the
+  DINO-WM test is a fixed-bank test. Several decisions were pre-specified across rounds and earlier development rounds
+  chose the direction, so the results are not corrected for multiplicity. On the fresh cohort, two questions were
+  pre-declared and a third was added after their analysis; its success differences have exact McNemar values of
+  \RTwQTwoMcN{} (VELDROP-z against the official cost) and \RThMcN{} (position against full under standardisation),
+  uncorrected. Other tested success-count differences did not reach the nominal 0.05 threshold.
+\item \emph{Data.} All evaluation goals, the fresh cohort included, come from training-split trajectories of the
+  checkpoints.
+\item \emph{Mechanism scope.} The mechanism needs a goal whose proprioception contains a velocity the criterion ignores
+  and an encoder that is sensitive to it. The JEPA-WM banks show a large velocity-energy contribution and the DINO-WM
+  banks a much smaller one, although DINO-WM's encoder also has nonzero velocity columns and full rank. Other tasks are
+  untested.
+\item \emph{Design.} The equal-weight standardisation is a heuristic, robust over a range of weights in development.
+  The goal-coordinate schema is task knowledge.
+\end{itemize}
+
+\section{Conclusion}
+The released JEPA-WM PushT cost penalises a goal-frame velocity that its endpoint success criterion does not require.
+An exact linear decomposition exposes a large velocity-energy contribution whose mean within-bank rank correlation with
+the final agent distance is near zero. A position-only, standardised cost (VELDROP-z) improved the executed plans of
+reduced-budget search, first on \RNineN{} goals and then on a fresh cohort of \RTwN{} starts, where successes rose from
+\RTwRawSucc{} to \RTwVZSucc{} with no losses. On both cohorts, the official-cost to standardised-full contrast is
+larger in mean margin than the standardised-full to standardised-position contrast. The latter comparison has four
+and six success gains, respectively, with no losses, but both margin intervals include zero. At a frozen intermediate
+weight the estimated difference remains uncertain. These comparisons do not identify a pure-velocity effect or
+allocate the total gain causally. DINO-WM is a boundary case with no
+incremental selection benefit over standardised full proprioception. A practical audit for any goal-conditioned latent
+planner follows: decompose the goal term by what the goal encodes, compare each part with what the success criterion
+depends on, and test a repair inside the search rather than only on fixed candidates. Full-budget receding-horizon
+evaluation, several seeds, goals outside the training split and other tasks are needed before broader claims.
+
+\appendices
+\section{Locks, timestamps and deviations}
+\label{app:locks}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{Fixed-bank test.} Locked at 02:32 UTC on 27 Oct 2026 before any data. The VELDROP-z addendum, the mechanism
+  check and the in-search protocol were locked at 02:52, when 3 of 16 starts had been collected; according to the
+  execution log, none had been opened.
+\item \emph{DINO-WM test.} Locked at 04:58 and amended at 05:00 to a fixed eight-start cohort, before any data.
+\item \emph{Factorial inside the search.} Designed after the earlier outcomes were known, and recorded at 23:48 UTC on
+  27 Oct 2026 (06:48 on 28 Oct, Vietnam time) before its runs; it is development evidence on the same goals.
+\item \emph{Fresh cohort.} Locked at 07:54 UTC on 28 Oct 2026, after infrastructure checks on an old start (the
+  official-cost search reproduced its stored plan exactly) and before any run of the cohort. It ran in nine resumable
+  chunks whose logs print timing and $\alpha_0$ only, and it was analysed once, after all 128 runs, then re-checked by a
+  second implementation. No run crashed.
+\item \emph{Standardised full arm on the fresh cohort.} Added after the analysis of the first four arms and locked at
+  23:41 UTC on 28 Oct 2026 before its runs. A restart of the computing container stopped its collection after four
+  runs; the interrupted run was repeated from its seed with unchanged code, and the interruption is recorded in the
+  deviation log. It was analysed once and re-checked by a second implementation.
+\item \emph{Execution deviations.} The in-search test ran in three resumable chunks; the console log of the first was
+  overwritten by a relaunch (each run record keeps its own timing), and the second recorded nothing. While the results
+  file was inspected for its format, two individual run records were printed before the analysis. A first DINO-WM
+  launch, started concurrently with the in-search test contrary to its lock, was killed before it recorded any start.
+\item \emph{Post hoc material.} The five-part decomposition shares, the bank factorial, the encoder geometry, the
+  agreement between VELDROP-z and the standardised full term on DINO-WM, and the head's own-score comparison were
+  computed after the outcomes and are descriptive.
+\item \emph{Verification.} Separate analysis implementations reproduced the recorded numerical decisions from saved per-plan
+  components and terminal states. The fresh-cohort audit additionally checks all 160 terminal records, five-arm goal
+  and initial-population matching, and constancy of the frozen weights. This verifies the saved-result
+  analysis, not an independent repetition of model training or of all simulator collection. The accompanying artifact provides portable saved-result analyses and external-runtime collection
+  scripts. A complete collection rerun requires the released checkpoints, datasets and pinned upstream repositories;
+  those dependencies are not bundled. The analysis code and saved outputs are prepared for release through the GitHub
+  page listed with the author information.
+\end{itemize}

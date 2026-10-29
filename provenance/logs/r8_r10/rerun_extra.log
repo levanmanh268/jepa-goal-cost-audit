@@ -1,0 +1,122 @@
+{
+  "adapter": "Cached scoring and synthetic tensor checks passed; CUDA/CEM untested.",
+  "ambient_negative_energy_counterexample": {
+    "channel": 5,
+    "cost": -0.3789952203912809
+  },
+  "pooling_counterexample": {
+    "pooled_latent_cost": 0.0,
+    "pooled_pair_energy": 1.0
+  },
+  "predictor_counterexample": {
+    "true_endpoints": [
+      [
+        0.0,
+        3.0
+      ],
+      [
+        1.0,
+        0.0
+      ]
+    ],
+    "predicted_endpoints": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0
+      ]
+    ],
+    "shared_score_selection": 0,
+    "task_best": 1
+  },
+  "power_sensitivity": [
+    {
+      "n": 35,
+      "delta": 0.1,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.1839369395961328
+    },
+    {
+      "n": 35,
+      "delta": 0.15,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.36954994009182746
+    },
+    {
+      "n": 35,
+      "delta": 0.2,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.6143635726114086
+    },
+    {
+      "n": 50,
+      "delta": 0.1,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.27833374219666757
+    },
+    {
+      "n": 50,
+      "delta": 0.15,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.540779651543057
+    },
+    {
+      "n": 50,
+      "delta": 0.2,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.8067356264725247
+    },
+    {
+      "n": 100,
+      "delta": 0.1,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.5146061430919179
+    },
+    {
+      "n": 100,
+      "delta": 0.15,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.847892715849611
+    },
+    {
+      "n": 100,
+      "delta": 0.2,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.9835004949485212
+    },
+    {
+      "n": 200,
+      "delta": 0.1,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.8029838553160669
+    },
+    {
+      "n": 200,
+      "delta": 0.15,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.9882510200695562
+    },
+    {
+      "n": 200,
+      "delta": 0.2,
+      "discordance": 0.3,
+      "one_sided_alpha": 0.05,
+      "power": 0.9999394489045041
+    }
+  ],
+  "normal_approximation_n_margin_sigma_1_162_delta_0_5": 34
+}

@@ -1,0 +1,32 @@
+{
+ "n": 16,
+ "issues": [],
+ "repro_maxabs": 0.0,
+ "max_margin_dev": 0.0,
+ "decision": "DROP_HELPS",
+ "mean_D": -0.35794309123868884,
+ "without_most_favourable": -0.2098131937346,
+ "gains_losses": [
+  4,
+  0
+ ],
+ "cells": {
+  "C00": [
+   3.0587073964390803,
+   7
+  ],
+  "C11": [
+   1.590708741530877,
+   11
+  ],
+  "C01": [
+   1.948651832769566,
+   7
+  ],
+  "C10": [
+   2.983454982872618,
+   7
+  ]
+ }
+}
+agreement with locked analysis: {'n': True, 'decision': True, 'mean_D': True, 'lbo': True, 'gains_losses': True, 'cells': True} ALL

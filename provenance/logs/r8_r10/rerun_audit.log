@@ -1,0 +1,15 @@
+B1 ['FA', 'margin', 1.0] [-0.7581555081133451, -1.47306403537487, -0.11699809740298456]
+B2a ['actions', 'logmargin', 0.1] [1.7869182358255404, 0.2908750691922126, 3.0256445224989914]
+B2b ['context', 'logmargin', 10.0] [1.252770059528619, -0.12574189979824718, 2.4614728100379444]
+nonnegative_same_config ['FA', 'margin', 1.0] 3.984447446379387
+true_fit_true_eval_same_config ['FA', 'margin', 1.0] 4.224324961959742
+true_fit_pred_eval_same_config ['FA', 'margin', 1.0] 3.9217208547927633
+pred_fit_true_eval ['FA', 'margin', 1.0] 3.6576552051092497
+nonnegative_train_cv ['FA', 'margin', 0.01] 4.012611149534836
+visual_only_train_cv ['visual', 'margin', 1.0] 3.621115096586739
+proprio_only_train_cv ['proprio', 'margin', 10.0] 3.7119617059653507
+PASS: cache/CV/reproduction checks; post-hoc results saved.
+
+real	0m10.167s
+user	0m9.158s
+sys	0m0.429s

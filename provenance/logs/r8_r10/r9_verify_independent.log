@@ -1,0 +1,57 @@
+provenance: OK {'runs': 49, 'npz_checked': 16, 'max_margin_deviation': 0.0, 'repro_maxabs': 0.0}
+{
+ "n": 16,
+ "veldrop_z": {
+  "decision": "SUPPORTED",
+  "mean_D": -1.4679986549082031,
+  "D_without_most_favourable": -1.041658834525774,
+  "improved": 13,
+  "worsened": 3,
+  "successes": [
+   11,
+   7
+  ],
+  "gains_losses": [
+   5,
+   1
+  ]
+ },
+ "b1": {
+  "decision": "NO_SIGNAL",
+  "mean_D": 2.3432566827206935,
+  "D_without_most_favourable": 2.829732521541095,
+  "improved": 6,
+  "worsened": 10,
+  "successes": [
+   3,
+   7
+  ],
+  "gains_losses": [
+   0,
+   4
+  ]
+ },
+ "mean_margin": {
+  "b0": 3.0587073964390803,
+  "veldrop_z": 1.590708741530877,
+  "b1": 5.401964079159773
+ }
+}
+per start (k, b0, veldrop_z, b1 margins; successes):
+   0    0.226*    0.143*    0.100*
+   1    0.480*    2.304    17.330 
+   2    0.270*    0.377*    6.599 
+   3    5.535     5.407     8.533 
+   4    8.546     0.683*    3.593 
+   5    0.835*    0.651*    1.419 
+   6    6.587     6.328     6.265 
+   7    4.407     2.514    18.403 
+   8    1.285     0.931*    2.643 
+   9    6.274     0.685*    5.584 
+  10    0.579*    0.388*    2.133 
+  11    6.800     0.726*    5.174 
+  12    0.353*    0.710*    0.594*
+  13    1.588     0.772*    5.489 
+  14    4.579     2.437     1.782 
+  15    0.594*    0.394*    0.789*
+agreement with locked analysis: {'n': True, 'primary_decision': True, 'secondary_decision': True, 'mean_D_primary': True, 'mean_D_secondary': True, 'lbo_primary': True, 'success_counts': True, 'mean_margins': True, 'provenance_failures_agree': True} ALL

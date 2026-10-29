@@ -1,0 +1,7 @@
+9090e731159401ffa008b2ced2178e14bd7d4203cf80cc087a8a262d7bf5e5ba  R8_PROTOCOL_LOCK.md
+6c6a2e858b5e3bbce4b2d85aaeb272583307d929fe12cfe827e60415db72d588  r8_collect.py
+2d290f5ce1cadad410a32a88ad259708345ccc957e88af313c27cd58a3b25217  /home/claude/wm/r6/r6_collect.py
+39b342acba94edfab9b9966d27cd807c5b40da809893824b3fd9a026ba5a1a9a  train_extract_sha256.json
+5502e1aa79fe97649259ea1817250b06cae0413d11711c59ad7bc0e28982e117  /home/claude/wm/r7/R7_FROZEN_R6_HEAD.json
+24bcdec1ac4ee6684bbeab9ccaaa50203d9cae1488935023ba059e78a10b95cd  /home/claude/wm/r7/R7_TPE_LOCK.json
+Tue Oct 27 02:32:04 UTC 2026

@@ -1,0 +1,19 @@
+W (16, 4) singular values [0.884  0.6539 0.5463 0.4022]
+column-block norms: position [0.8028 0.57  ] velocity [0.6083 0.5743]
+decode check: max |pinv-decoded true proprio - simulator proprio| over all plans 3.82e-03 (normalized units); max residual of predicted embedding outside range(W) 1.923e-02
+goal-frame agent speed (simulator units): median 78.9, min 19.3, max 243.6
+velocity share of the official proprio term (eval banks, mean over starts): 0.727
+Spearman(prop, true final agent distance) per eval bank: mean 0.398, median 0.332
+Spearman(prop_pos, true final agent distance) per eval bank: mean 0.956, median 0.963
+Spearman(prop_vel, true final agent distance) per eval bank: mean -0.012, median -0.015
+
+rule                               all26 succ |   tr16   te10 |  agent  block  angle
+official                           3.845    7 |  3.522  4.363 |   62.3   22.9   24.2
+hprop_std (R6)                     3.316    6 |  3.001  3.820 |   51.9   23.0   22.7
+VELDROP = vis + 0.1 prop_pos       3.810    6 |  3.483  4.335 |   62.7   21.5   22.9
+VELDROP-z = z(vis)+z(prop_pos)     3.183   10 |  2.831  3.745 |   47.0   21.7   23.5
+POS-only (prop_pos)                2.936    8 |  2.632  3.422 |   32.0   37.4   27.1
+VEL-only (diagnostic)              4.249    1 |  4.029  4.602 |   70.5   29.8   26.8
+prop-only (R6)                     3.315    1 |  3.067  3.712 |   46.6   33.4   27.0
+VELDROP = vis + 0.1 prop_pos: D vs official mean -0.035; improved 2, worsened 1; without most favourable start +0.003
+VELDROP-z = z(vis)+z(prop_pos): D vs official mean -0.663; improved 16, worsened 2; without most favourable start -0.569

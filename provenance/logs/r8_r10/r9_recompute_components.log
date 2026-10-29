@@ -1,0 +1,29 @@
+{
+ "n": 16,
+ "repro_maxabs": 0.0,
+ "b0_plans_equal_R8_proposal_mean": true,
+ "mean_margin": {
+  "b0": 3.0587073964390803,
+  "veldrop_z": 1.590708741530877,
+  "b1": 5.401964079159773
+ },
+ "successes": {
+  "b0": 7,
+  "veldrop_z": 11,
+  "b1": 3
+ },
+ "veldrop_z_vs_b0": {
+  "decision": "SUPPORTED",
+  "mean_D": -1.4679986549082031,
+  "D_without_most_favourable": -1.041658834525774,
+  "improved": 13,
+  "worsened": 3
+ },
+ "b1_vs_b0": {
+  "decision": "NO_SIGNAL",
+  "mean_D": 2.3432566827206935,
+  "D_without_most_favourable": 2.829732521541095,
+  "improved": 6,
+  "worsened": 10
+ }
+}

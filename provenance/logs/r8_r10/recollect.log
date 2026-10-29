@@ -1,0 +1,19 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+start 1 traj 9 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.2, 'predict': 153.6, 'encode': 21.8} 177.3
+start 2 traj 15 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.2, 'predict': 113.0, 'encode': 9.3} 127.4
+start 3 traj 2 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.2, 'predict': 160.2, 'encode': 9.1} 174.4
+start 4 traj 11 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.2, 'predict': 96.7, 'encode': 9.9} 108.5
+start 5 traj 9 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.3, 'predict': 96.6, 'encode': 9.0} 107.5
+start 6 traj 18 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.1, 'predict': 95.6, 'encode': 9.1} 106.5
+start 7 traj 5 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.2, 'predict': 96.6, 'encode': 9.7} 108.3
+start 8 traj 14 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.2, 'predict': 92.6, 'encode': 9.8} 104.2
+start 9 traj 6 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.2, 'predict': 91.6, 'encode': 9.0} 102.4
+start 10 traj 17 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.2, 'predict': 91.1, 'encode': 8.9} 101.8
+start 11 traj 18 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.3, 'predict': 93.1, 'encode': 8.1} 103.1
+start 12 traj 19 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.1, 'predict': 94.8, 'encode': 9.3} 105.9
+start 13 traj 10 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.3, 'predict': 93.7, 'encode': 9.4} 105.0
+start 14 traj 9 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.2, 'predict': 94.1, 'encode': 9.6} 105.5
+start 15 traj 5 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 1.2, 'predict': 95.8, 'encode': 9.5} 107.2
+done 16

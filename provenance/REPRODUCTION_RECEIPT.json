@@ -1,0 +1,91 @@
+{
+  "scope": "Saved-result analysis, not simulator/checkpoint reproduction.",
+  "python": "3.12.14",
+  "checks": [
+    {
+      "name": "r8_compact",
+      "exit_code": 0
+    },
+    {
+      "name": "r10_compact",
+      "exit_code": 0
+    },
+    {
+      "name": "r9_compact",
+      "exit_code": 0
+    },
+    {
+      "name": "r9_analysis",
+      "exit_code": 0
+    },
+    {
+      "byte_identical_to": "r8/r9_analysis.json",
+      "sha256": "80fc5f965c3133cf15d5aeefe9d7a7b72849a6b11d7242b4ea533904aaba7ca6"
+    },
+    {
+      "name": "r11_analysis",
+      "exit_code": 0
+    },
+    {
+      "byte_identical_to": "r11/r11_analysis.json",
+      "sha256": "78409edb6b661d65e9414ff41c230d8d8ae38f49eb83a1eb359bf1479ca73cdb"
+    },
+    {
+      "name": "r12_analysis",
+      "exit_code": 0
+    },
+    {
+      "byte_identical_to": "r12/r12_analysis.json",
+      "sha256": "d788c0cacbba2666fc44b950bad9c4e88dc4b68fad2dbee36c13450e82b735f1"
+    },
+    {
+      "name": "r13_analysis",
+      "exit_code": 0
+    },
+    {
+      "byte_identical_to": "r13/r13_analysis.json",
+      "sha256": "51d451469248845ffe849e4d74c605a09b011c429793b6ecef75db1a64cd167d"
+    },
+    {
+      "name": "independent_r12_r13",
+      "exit_code": 0
+    },
+    {
+      "name": "macros_r8",
+      "exit_code": 0
+    },
+    {
+      "byte_identical_to": "paper/numbers_r8.tex",
+      "sha256": "c4da396e1e40427093157049b6ad48d76a5a6e2c35c5aea0c2692b8611e9ff5e"
+    },
+    {
+      "name": "macros_extra",
+      "exit_code": 0
+    },
+    {
+      "byte_identical_to": "paper/numbers_extra.tex",
+      "sha256": "af23d19684a1c492d2d777b43338d807eb7a4a1359da092fad2209019c0e3e3e"
+    },
+    {
+      "name": "macros_r12",
+      "exit_code": 0
+    },
+    {
+      "byte_identical_to": "paper/numbers_r12.tex",
+      "sha256": "ec160c001ed20fe0a62ec71ba7bbe97b6f8db973ed9a9867bbaf402c6c2b17eb"
+    },
+    {
+      "name": "macros_r13",
+      "exit_code": 0
+    },
+    {
+      "byte_identical_to": "paper/numbers_r13.tex",
+      "sha256": "7acf9c317d4d10932b982472aa5ff1b383c345b0604b8faa23635904fa517887"
+    },
+    {
+      "name": "figure",
+      "exit_code": 0
+    }
+  ],
+  "status": "PASS"
+}

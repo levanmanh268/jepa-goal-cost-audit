@@ -1,0 +1,20 @@
+{
+ "n": 16,
+ "B0": [
+  2.947004554216871,
+  8
+ ],
+ "B1": [
+  2.908832380873763,
+  6
+ ],
+ "VELDROP_Z": [
+  2.3201210278521427,
+  9
+ ],
+ "primary": "NOT_REPLICATED",
+ "addendum": "SUPPORTED",
+ "mech_prop": 0.4330700549450549,
+ "mech_pos": 0.9543297847985346
+}
+agreement with locked analysis: {'B0_mean': True, 'B1_mean': True, 'VZ_mean': True, 'succ': True, 'primary': True, 'addendum': True, 'mech': True}

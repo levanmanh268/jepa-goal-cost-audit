@@ -1,0 +1,21 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+start 0 ep 3635 off 85 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 2.8e-05, 'float16_argmin_eval_equal': True} {'cem': 282.8, 'sim': 0.8, 'predict': 69.9, 'encode': 6.9} 361.7
+start 1 ep 2466 off 10 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 2e-05, 'float16_argmin_eval_equal': True} {'cem': 282.0, 'sim': 0.8, 'predict': 71.8, 'encode': 8.3} 364.2
+start 2 ep 3108 off 26 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 2.7e-05, 'float16_argmin_eval_equal': True} {'cem': 279.9, 'sim': 0.7, 'predict': 133.7, 'encode': 19.2} 437.2
+start 3 ep 16642 off 6 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 1e-05, 'float16_argmin_eval_equal': True} {'cem': 296.8, 'sim': 0.7, 'predict': 72.0, 'encode': 7.4} 380.9
+start 4 ep 3665 off 20 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 1.9e-05, 'float16_argmin_eval_equal': True} {'cem': 283.3, 'sim': 0.9, 'predict': 72.3, 'encode': 7.2} 364.9
+start 5 ep 18150 off 27 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 2.2e-05, 'float16_argmin_eval_equal': True} {'cem': 280.4, 'sim': 0.8, 'predict': 67.2, 'encode': 7.1} 356.8
+start 6 ep 15360 off 4 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 1.3e-05, 'float16_argmin_eval_equal': True} {'cem': 283.1, 'sim': 0.8, 'predict': 69.2, 'encode': 7.0} 361.3
+start 7 ep 12440 off 4 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 2e-05, 'float16_argmin_eval_equal': True} {'cem': 263.8, 'sim': 0.8, 'predict': 67.7, 'encode': 7.0} 340.5
+start 8 ep 1941 off 34 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 1.9e-05, 'float16_argmin_eval_equal': True} {'cem': 274.2, 'sim': 0.8, 'predict': 69.0, 'encode': 7.3} 352.7
+start 9 ep 10673 off 63 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 2e-05, 'float16_argmin_eval_equal': True} {'cem': 284.1, 'sim': 0.8, 'predict': 70.4, 'encode': 7.3} 363.9
+start 10 ep 12946 off 37 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 2e-05, 'float16_argmin_eval_equal': True} {'cem': 295.2, 'sim': 0.8, 'predict': 73.2, 'encode': 7.3} 377.7
+start 11 ep 4828 off 6 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 2.8e-05, 'float16_argmin_eval_equal': True} {'cem': 275.8, 'sim': 0.7, 'predict': 67.6, 'encode': 7.2} 352.5
+start 12 ep 6331 off 54 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 1.9e-05, 'float16_argmin_eval_equal': True} {'cem': 269.4, 'sim': 0.8, 'predict': 68.4, 'encode': 6.9} 346.7
+start 13 ep 10136 off 15 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 2e-05, 'float16_argmin_eval_equal': True} {'cem': 275.3, 'sim': 0.9, 'predict': 67.2, 'encode': 6.4} 351.0
+start 14 ep 13906 off 31 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 2.7e-05, 'float16_argmin_eval_equal': True} {'cem': 243.9, 'sim': 0.8, 'predict': 66.2, 'encode': 7.1} 319.1
+start 15 ep 10710 off 52 vis [1, 16, 16, 384] pro [256, 16] {'model_cost_vs_scorer_rel': 0.0, 'float16_cost_rel_err_max': 2.7e-05, 'float16_argmin_eval_equal': True} {'cem': 271.1, 'sim': 0.8, 'predict': 70.4, 'encode': 7.7} 351.3
+done 16
+R8_COLLECT_EXIT

@@ -1,0 +1,10 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+start 5 traj 8 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 0.8, 'predict': 68.7, 'encode': 7.0} 79.0
+start 6 traj 12 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 0.8, 'predict': 69.9, 'encode': 7.1} 78.2
+start 7 traj 13 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 0.8, 'predict': 67.6, 'encode': 6.8} 75.6
+start 8 traj 16 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 0.8, 'predict': 69.0, 'encode': 6.8} 77.0
+start 9 traj 20 {'margin_equal': True, 'success_equal': True, 'model_cost_vs_cache_rel': 0.0, 'ch_vs_cache_abs': 0.0} {'sim': 0.7, 'predict': 68.1, 'encode': 6.9} 76.1
+done 10
+TEST_BANKS_DONE

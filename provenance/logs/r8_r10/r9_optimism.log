@@ -1,0 +1,172 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+INFO:dinov2:using MLP layer as FFN
+INFO:root:Encoder: DinoEncoder(
+  (base_model): DinoVisionTransformer(
+    (patch_embed): PatchEmbed(
+      (proj): Conv2d(3, 384, kernel_size=(14, 14), stride=(14, 14))
+      (norm): Identity()
+    )
+    (blocks): ModuleList(
+      (0-11): 12 x NestedTensorBlock(
+        (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+        (attn): MemEffAttention(
+          (qkv): Linear(in_features=384, out_features=1152, bias=True)
+          (proj): Linear(in_features=384, out_features=384, bias=True)
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (ls1): LayerScale()
+        (drop_path1): Identity()
+        (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU(approximate='none')
+          (fc2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+        (ls2): LayerScale()
+        (drop_path2): Identity()
+      )
+    )
+    (norm): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+    (head): Identity()
+  )
+)
+INFO:root:🧠 Encoder: DinoEncoder (22,056,576 params, frozen=True)
+INFO:app.plan_common.models.AdaLN_vit:🔧 Initialized 6 AdaLN blocks (scale_factor=10)
+INFO:root:Predictor: VisionTransformerAdaLN(
+  (predictor_embed): Linear(in_features=384, out_features=384, bias=True)
+  (action_encoder): Linear(in_features=10, out_features=400, bias=True)
+  (predictor_blocks): ModuleList(
+    (0-5): 6 x FWAdaLNBlock(
+      (norm1): LayerNorm((400,), eps=1e-06, elementwise_affine=True)
+      (attn): RoPEAttention(
+        (qkv): Linear(in_features=400, out_features=1200, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=400, out_features=400, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((400,), eps=1e-06, elementwise_affine=True)
+      (mlp): MLP(
+        (fc1): Linear(in_features=400, out_features=1600, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1600, out_features=400, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+      (adaLN_modulation): Sequential(
+        (0): SiLU()
+        (1): Linear(in_features=400, out_features=2400, bias=True)
+      )
+    )
+  )
+  (predictor_norm): LayerNorm((400,), eps=1e-06, elementwise_affine=True)
+  (predictor_proj): Linear(in_features=384, out_features=384, bias=True)
+)
+INFO:root:🔮 Predictor: VisionTransformerAdaLN (17,626,480 params)
+INFO:root:Loading checkpoint from local path: /home/claude/wm/runtime/checkpoints/jepa_wm_pusht.pth.tar
+INFO:root:loaded pretrained predictor from epoch 50 with msg: <All keys matched successfully>
+INFO:root:loaded pretrained proprio encoder from epoch 50 with msg: <All keys matched successfully>
+INFO:root:📉 Loss weights: L2=1.0
+0:b0 done
+0:b1 done
+0:veldrop_z done
+1:b0 done
+1:b1 done
+1:veldrop_z done
+2:b0 done
+2:b1 done
+2:veldrop_z done
+3:b0 done
+3:b1 done
+3:veldrop_z done
+4:b0 done
+4:b1 done
+4:veldrop_z done
+5:b0 done
+5:b1 done
+5:veldrop_z done
+6:b0 done
+6:b1 done
+6:veldrop_z done
+7:b0 done
+7:b1 done
+7:veldrop_z done
+8:b0 done
+8:b1 done
+8:veldrop_z done
+9:b0 done
+9:b1 done
+9:veldrop_z done
+10:b0 done
+10:b1 done
+10:veldrop_z done
+11:b0 done
+11:b1 done
+11:veldrop_z done
+12:b0 done
+12:b1 done
+12:veldrop_z done
+13:b0 done
+13:b1 done
+13:veldrop_z done
+14:b0 done
+14:b1 done
+14:veldrop_z done
+15:b0 done
+15:b1 done
+15:veldrop_z done
+{
+ "b0": {
+  "raw": {
+   "pred_mean": 0.2608306394615525,
+   "true_mean": 0.26780954816535985,
+   "median_true_over_pred": 1.0453453076913184
+  },
+  "b1": {
+   "pred_mean": 0.933270518853483,
+   "true_mean": 1.010062194600415,
+   "median_true_over_pred": 1.0794230482689429
+  },
+  "prop_pos": {
+   "pred_mean": 0.013784611736357751,
+   "true_mean": 0.01457344362206885,
+   "median_true_over_pred": 1.0167956772685747
+  }
+ },
+ "b1": {
+  "raw": {
+   "pred_mean": 0.5399826864769299,
+   "true_mean": 0.6002993724784365,
+   "median_true_over_pred": 1.109567924193318
+  },
+  "b1": {
+   "pred_mean": 0.95929125328162,
+   "true_mean": 1.0719058758390008,
+   "median_true_over_pred": 1.0790860090613186
+  },
+  "prop_pos": {
+   "pred_mean": 0.036203935553529173,
+   "true_mean": 0.04914806453322915,
+   "median_true_over_pred": 1.0827830654228232
+  }
+ },
+ "veldrop_z": {
+  "raw": {
+   "pred_mean": 0.2580887629341929,
+   "true_mean": 0.287602015993698,
+   "median_true_over_pred": 0.9420414884380162
+  },
+  "b1": {
+   "pred_mean": 0.7132495702854496,
+   "true_mean": 0.7831602593124527,
+   "median_true_over_pred": 1.0148429837602175
+  },
+  "prop_pos": {
+   "pred_mean": 0.0015452433616845338,
+   "true_mean": 0.0017086063509410428,
+   "median_true_over_pred": 0.7529634920124468
+  }
+ }
+}

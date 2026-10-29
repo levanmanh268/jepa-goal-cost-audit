@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.venv/
+outputs/
+runtime/
+d3/data_official/
+r7/banks/
+r8/cohort/start_*.npz
+r10/cohort/start_*.npz
+paper/build/
+*.aux
+*.log
+!provenance/logs/**/*.log
+!evidence/r12_r13/logs/*.log
+*.fls
+*.fdb_latexmk
+*.out

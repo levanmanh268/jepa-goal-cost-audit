@@ -1,0 +1,44 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\abstract}{---}{- }{}{\PackageError{paper}{Abstract punctuation patch failed}{}}
+\patchcmd{\IEEEkeywords}{---}{- }{}{\PackageError{paper}{Keywords punctuation patch failed}{}}
+\makeatother
+\input{numbers_r8.tex}
+\input{numbers_r6_legacy.tex}
+\input{numbers_extra.tex}
+\input{numbers_r12.tex}
+\input{numbers_r13.tex}
+\newenvironment{widetable}[1][t]{\begin{table*}[#1]}{\end{table*}}
+\newcommand{\auditfigwidth}{\columnwidth}
+
+\begin{document}
+\title{Matching the Wrong Thing: Goal-Frame Velocity in the Planning Cost of a JEPA World Model}
+\author{\IEEEauthorblockN{Le Van Manh}
+\IEEEauthorblockA{\textit{Faculty of Information Technology and Communications} \\
+\textit{CMC University}\\
+Ha Noi, Viet Nam \\
+BAI250042@st.cmcu.edu.vn \\
+\href{https://github.com/levanmanh268}{github.com/levanmanh268}}}
+\maketitle
+
+\begin{abstract}
+\input{abstract.tex}
+\end{abstract}
+
+\begin{IEEEkeywords}
+world models, joint-embedding predictive architecture, open-loop planning, goal-conditioned planning, cost
+design, reproducibility
+\end{IEEEkeywords}
+
+\input{body.tex}
+
+\IEEEtriggeratref{5}
+\input{refs.tex}
+\end{document}

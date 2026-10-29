@@ -1,0 +1,6 @@
+B0                       mean 4.363 succ 2
+B1                       mean 3.604 succ 4
+B1vis only               mean 3.589 succ 4
+VELDROP-z                mean 3.745 succ 4
+z(B1vis)+z(prop_pos)     mean 3.380 succ 4
+z(B1)+z(prop_pos)        mean 3.318 succ 3

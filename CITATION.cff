@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "Please cite this research artifact and the underlying world-model releases."
+type: software
+title: "JEPA goal-cost audit: Matching the Wrong Thing"
+authors:
+  - family-names: "Le"
+    given-names: "Van Manh"
+    affiliation: "CMC University"
+version: "2026.10.29"
+date-released: "2026-10-29"
+abstract: "Exploratory saved-result audit of goal-frame velocity and a training-free planning-cost correction for released world models on PushT."

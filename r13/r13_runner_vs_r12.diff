@@ -1,0 +1,27 @@
+--- /home/claude/wm/r12/r12_frozen_scale.py	2026-10-28 07:40:58.113017863 +0000
++++ r13_zfull.py	2026-10-28 23:40:32.300278196 +0000
+@@ -1,4 +1,6 @@
+-"""R12 frozen-scale CEM runner (2026-10-28), derived from r11_scale_ablation.py (unchanged original kept in r11/).
++"""R13 runner (2026-10-29): r12_frozen_scale.py (kept unchanged in r12/) with one added arm, hprop_std = z(L_vis) + z(Pi_full),
++run on the locked R12 cohort with the same seeds. Original R12 docstring follows.
++R12 frozen-scale CEM runner (2026-10-28), derived from r11_scale_ablation.py (unchanged original kept in r11/).
+ Changes from R11: fresh cohort read from r12_cohort.json (no fixed banks); arms
+   fixed_full : L_vis + alpha0 * Pi_full     (Q1, primary pair)
+   fixed_pos  : L_vis + alpha0 * Pi_pos      (Q1, primary pair)
+@@ -70,7 +72,7 @@
+         coh = json.loads(Path(a.cohort).read_text()); cohort_sha = sha_file(a.cohort)
+         jobs = [(s['k'], {kk: s[kk] for kk in ['k', 'val_episode', 'offset', 'env_seed', 'cem_seed']}) for s in coh['starts']]
+         assert [k for k, _ in jobs] == list(range(len(jobs)))
+-        iters = 8; groups = [Q1, Q2]; name = 'r12_inloop.json'
++        iters = 8; groups = [['hprop_std']]; name = 'r13_inloop.json'
+     out = Path(a.out); out.mkdir(parents=True, exist_ok=True); res_path = out / name
+     cfg = {'mode': 'regress' if a.regress else ('smoke' if a.smoke else 'cohort'), 'groups': groups, 'samples': 64, 'iters': iters,
+            'elites': 10, 'horizon': 6, 'eps': EPS, 'cohort_sha256': cohort_sha,
+@@ -117,6 +119,7 @@
+                 def arm_cost(tt, alpha0):
+                     if arm == 'raw': return tt['raw']
+                     if arm == 'veldrop_z': return zs(tt['vis']) + zs(tt['prop_pos'])
++                    if arm == 'hprop_std': return zs(tt['vis']) + zs(tt['prop_full'])
+                     if arm == 'fixed_full': return tt['vis'] + alpha0 * tt['prop_full']
+                     if arm == 'fixed_pos': return tt['vis'] + alpha0 * tt['prop_pos']
+                     raise SystemExit(arm)

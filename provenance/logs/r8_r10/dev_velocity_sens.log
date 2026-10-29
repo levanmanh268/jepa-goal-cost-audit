@@ -1,0 +1,11 @@
+official reference: see dev_velocity.log (3.845, 7)
+z(vis) + 0.25 z(prop_pos): mean 3.510 succ 7
+z(vis) + 0.50 z(prop_pos): mean 3.245 succ 8
+z(vis) + 0.75 z(prop_pos): mean 3.181 succ 9
+z(vis) + 1.00 z(prop_pos): mean 3.183 succ 10
+z(vis) + 1.50 z(prop_pos): mean 3.112 succ 10
+z(vis) + 2.00 z(prop_pos): mean 2.942 succ 10
+z(vis) + 3.00 z(prop_pos): mean 2.921 succ 10
+z(vis) + 5.00 z(prop_pos): mean 2.881 succ 10
+z(vis) + z(prop with ZERO goal velocity): mean 3.275 succ 7
+vis + 0.1 * prop with ZERO goal velocity: mean 3.794 succ 7

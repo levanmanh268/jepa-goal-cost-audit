@@ -1,0 +1,28 @@
+{
+ "n": 8,
+ "B0": [
+  3.8615602685850634,
+  2
+ ],
+ "VELDROP_Z": [
+  3.5064428180256084,
+  2
+ ],
+ "VELDROP_Z_vs_B0": "SUPPORTED",
+ "mean_D": -0.3551174505594547,
+ "D_without_most_favourable": -0.1392889337363871,
+ "improved": 3,
+ "worsened": 0,
+ "mech_prop_full": 0.9796417124542123,
+ "mech_prop_pos": 0.9679544413919414,
+ "O_best_in_bank": [
+  3.06044313764414,
+  2
+ ],
+ "mechanism": "NOT_REPLICATED",
+ "B1": [
+  3.709145476991964,
+  2
+ ],
+ "B1_vs_B0": "REPLICATED"
+}

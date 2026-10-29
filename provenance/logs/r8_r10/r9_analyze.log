@@ -1,0 +1,47 @@
+{
+ "n": 16,
+ "provenance_failures": [],
+ "R9_PRIMARY_veldrop_z_vs_b0": {
+  "decision": "SUPPORTED",
+  "D": [
+   -1.4679986549082031,
+   -2.81422007420539,
+   -0.2959163569463725
+  ],
+  "improved": 13,
+  "worsened": 3,
+  "D_without_most_favourable": -1.041658834525774,
+  "successes": [
+   11,
+   7
+  ],
+  "paired_success_gains_losses": [
+   5,
+   1
+  ]
+ },
+ "R9_SECONDARY_b1_vs_b0": {
+  "decision": "NO_SIGNAL",
+  "D": [
+   2.3432566827206935,
+   -0.07832584690459177,
+   5.335497463902348
+  ],
+  "improved": 6,
+  "worsened": 10,
+  "D_without_most_favourable": 2.829732521541095,
+  "successes": [
+   3,
+   7
+  ],
+  "paired_success_gains_losses": [
+   0,
+   4
+  ]
+ },
+ "success_counts": {
+  "b0": 7,
+  "veldrop_z": 11,
+  "b1": 3
+ }
+}

@@ -1,0 +1,14 @@
+rule                               all26 succ |   tr16   te10 |  agent  block  angle
+official                           3.845    7 |  3.522  4.363 |   62.3   22.9   24.2
+E-official (true latents)          3.540    6 |  3.103  4.238 |   58.2   19.7   20.6
+prop-pred only                     3.315    1 |  3.067  3.712 |   46.6   33.4   27.0
+prop-true only                     3.331    1 |  3.093  3.712 |   46.6   33.8   26.9
+agent-oracle (privileged)          2.971    7 |  2.604  3.559 |   29.5   37.0   27.4
+agent+block pos oracle (priv.)     2.610   11 |  2.281  3.137 |   37.3   21.8   22.2
+O = margin oracle                  2.527   11 |  2.240  2.987 |   40.1   20.9   20.6
+
+proprio prediction RMSE (pred vs true encoded, per plan): median 0.0134; mean within-bank spread of predicted proprio 0.1143
+Spearman(prop-pred, prop-true) per bank: mean 0.996; Spearman(prop-true, true agent distance): mean 0.389
+
+MCH-0 fitted on all 26 starts: 8 positive weights; proprio feature index 384 weight 4.829; channels [68, 78, 109, 261, 287, 305, 341]
+share of score spread by feature: {68: 0.304, 78: 0.032, 109: 0.051, 261: 0.22, 287: 0.003, 305: 0.168, 341: 0.044, 384: 0.179}

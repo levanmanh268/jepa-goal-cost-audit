@@ -1,0 +1,41 @@
+{
+ "Q1": {
+  "mean": -0.16870229714485405,
+  "ci": [
+   -0.4296891372567548,
+   0.0913615257951276
+  ],
+  "gains_losses": [
+   1,
+   1
+  ],
+  "succ_new_ref": [
+   14,
+   14
+  ],
+  "lbo": -0.08684880636058173,
+  "mcnemar": 1.0,
+  "decision": "POSITION_HELPS",
+  "agrees_with_locked": true
+ },
+ "Q2": {
+  "mean": -1.4953258990517375,
+  "ci": [
+   -2.4452104125182745,
+   -0.7235210839405828
+  ],
+  "gains_losses": [
+   7,
+   0
+  ],
+  "succ_new_ref": [
+   20,
+   13
+  ],
+  "lbo": -1.1894516356845688,
+  "mcnemar": 0.015625,
+  "decision": "VELDROP_Z_HELPS",
+  "agrees_with_locked": true
+ }
+}
+ALL

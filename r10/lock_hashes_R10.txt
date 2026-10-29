@@ -1,0 +1,18 @@
+```
+f29544790c76bf51044757e553f355c099252e0b61514b8037cf576a47d0c383  r10_collect.py
+78847b049a50baa8b7efaf25a46765c6a772db8048f23865518acca58e4fa227  r10_analyze.py
+edf8e6951cc7df245f49cfad2f0c2ec0ba692eb0be7b8d256267cdabf94fcc29  run_r10.sh
+2d4c2baa863933c54e41b6d7bde859736132c67620b59cbadf60c168f49bba74  R10_PROTOCOL_LOCK.md
+39b342acba94edfab9b9966d27cd807c5b40da809893824b3fd9a026ba5a1a9a  ../r8/train_extract_sha256.json
+8ec9cb05f22812d7f12e3c216b0637f41641055c0653e503e2746edb981b550f  /home/claude/wm/runtime/checkpoints/dino_wm_pusht.pth.tar
+5502e1aa79fe97649259ea1817250b06cae0413d11711c59ad7bc0e28982e117  /home/claude/wm/r7/R7_FROZEN_R6_HEAD.json
+24bcdec1ac4ee6684bbeab9ccaaa50203d9cae1488935023ba059e78a10b95cd  /home/claude/wm/r7/R7_TPE_LOCK.json
+Tue Oct 27 04:57:46 UTC 2026
+```
+```
+aa23315ae3afa67128fa7edb23083afa10adbce24da42c43b0ed02faaf1c4f92  run_r10.sh
+c24ddf8c1ce938b68845fd2bbd46dbc4a410b449e773f367ba82ecf6fa0522bd  R10_AMENDMENT_1.md
+f29544790c76bf51044757e553f355c099252e0b61514b8037cf576a47d0c383  r10_collect.py
+78847b049a50baa8b7efaf25a46765c6a772db8048f23865518acca58e4fa227  r10_analyze.py
+Tue Oct 27 05:00:15 UTC 2026
+```

@@ -1,0 +1,25 @@
+{
+ "n": 8,
+ "issues": [],
+ "B0": [
+  3.8615602685850634,
+  2
+ ],
+ "B1": [
+  3.709145476991964,
+  2
+ ],
+ "VELDROP_Z": [
+  3.5064428180256084,
+  2
+ ],
+ "primary": "SUPPORTED",
+ "mean_D": -0.3551174505594547,
+ "D_without_most_favourable": -0.1392889337363871,
+ "improved": 3,
+ "worsened": 0,
+ "mechanism": "NOT_REPLICATED",
+ "mech_prop": 0.9796417124542123,
+ "mech_pos": 0.9679544413919414
+}
+agreement with locked analysis: {'n': True, 'B0_mean': True, 'B1_mean': True, 'VZ_mean': True, 'succ': True, 'primary': True, 'mech_decision': True, 'mech_values': True} ALL

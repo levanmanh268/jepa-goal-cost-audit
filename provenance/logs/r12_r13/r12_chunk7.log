@@ -1,0 +1,82 @@
+9c3ebe2e218b3e3ac822ecc280b7664990de3d2bc07207a183e680f65cdd2c35  r12_frozen_scale.py
+91ba9441cd6f777267b26cb84a66f73ff6a2c60ac00c20b624154b62af9cff68  r12_cohort.json
+b4e4678596e008dee6f17e092385d040cee8fdf88897421ca872b64c8f7b82c2  r12_analyze.py
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+  (base_model): DinoVisionTransformer(
+    (patch_embed): PatchEmbed(
+      (proj): Conv2d(3, 384, kernel_size=(14, 14), stride=(14, 14))
+      (norm): Identity()
+    )
+    (blocks): ModuleList(
+      (0-11): 12 x NestedTensorBlock(
+        (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+        (attn): MemEffAttention(
+          (qkv): Linear(in_features=384, out_features=1152, bias=True)
+          (proj): Linear(in_features=384, out_features=384, bias=True)
+          (proj_drop): Dropout(p=0.0, inplace=False)
+        )
+        (ls1): LayerScale()
+        (drop_path1): Identity()
+        (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+        (mlp): Mlp(
+          (fc1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU(approximate='none')
+          (fc2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop): Dropout(p=0.0, inplace=False)
+        )
+        (ls2): LayerScale()
+        (drop_path2): Identity()
+      )
+    )
+    (norm): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+    (head): Identity()
+  )
+)
+  (predictor_embed): Linear(in_features=384, out_features=384, bias=True)
+  (action_encoder): Linear(in_features=10, out_features=400, bias=True)
+  (predictor_blocks): ModuleList(
+    (0-5): 6 x FWAdaLNBlock(
+      (norm1): LayerNorm((400,), eps=1e-06, elementwise_affine=True)
+      (attn): RoPEAttention(
+        (qkv): Linear(in_features=400, out_features=1200, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=400, out_features=400, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((400,), eps=1e-06, elementwise_affine=True)
+      (mlp): MLP(
+        (fc1): Linear(in_features=400, out_features=1600, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1600, out_features=400, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+      (adaLN_modulation): Sequential(
+        (0): SiLU()
+        (1): Linear(in_features=400, out_features=2400, bias=True)
+      )
+    )
+  )
+  (predictor_norm): LayerNorm((400,), eps=1e-06, elementwise_affine=True)
+  (predictor_proj): Linear(in_features=384, out_features=384, bias=True)
+)
+start 14 arm veldrop_z alpha0 3.093359 sec 399.2  
+start 15 arm raw alpha0 1.747036 sec 398.1  
+start 15 arm veldrop_z alpha0 1.747036 sec 386.0  
+start 16 arm raw alpha0 2.08558 sec 394.8  
+start 16 arm veldrop_z alpha0 2.08558 sec 391.8  
+start 17 arm raw alpha0 2.031126 sec 398.7  
+start 17 arm veldrop_z alpha0 2.031126 sec 401.1  
+start 18 arm raw alpha0 3.236414 sec 412.4  
+start 18 arm veldrop_z alpha0 3.236414 sec 404.0  
+start 19 arm raw alpha0 0.34371 sec 399.6  
+start 19 arm veldrop_z alpha0 0.34371 sec 424.8  
+start 20 arm raw alpha0 1.210288 sec 404.2  
+start 20 arm veldrop_z alpha0 1.210288 sec 392.1  
+start 21 arm raw alpha0 1.794096 sec 405.0  
+start 21 arm veldrop_z alpha0 1.794096 sec 412.8  
+start 22 arm raw alpha0 1.238533 sec 414.6  
+start 22 arm veldrop_z alpha0 1.238533 sec 389.5  
+exit code 124

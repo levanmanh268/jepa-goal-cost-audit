@@ -1,0 +1,18 @@
+26 starts, 21 trajectories; goal foreground patches mean 128.1, components mean 17.88 (min 12, max 25)
+B1-26 signed ridge: nonzero/positive weights per fold, mean 200.6
+MCH-0 nonneg: nonzero/positive weights per fold, mean 8.0
+MCH-1 nonneg+ridge: nonzero/positive weights per fold, mean 25.1
+
+rule                       all26 succ |   tr16   te10 |  agent  block  angle
+official                   3.845    7 |  3.522  4.363 |   62.3   22.9   24.2
+hprop_std                  3.316    6 |  3.001  3.820 |   51.9   23.0   22.7
+ENT-1 +0.1prop             3.845    7 |  3.522  4.363 |   62.3   22.9   24.2
+ENT-1 zsum                 3.316    6 |  3.001  3.820 |   51.9   23.0   22.7
+ENT-2 +0.1prop             3.862    7 |  3.619  4.249 |   63.3   19.4   22.7
+ENT-2 zsum                 3.433    6 |  3.168  3.857 |   54.7   22.2   23.2
+B1-26 signed ridge         3.468    7 |  3.255  3.809 |   51.7   26.4   26.4
+MCH-0 nonneg               3.324    8 |  2.941  3.937 |   48.9   25.6   24.0
+MCH-1 nonneg+ridge         3.539    8 |  3.183  4.107 |   53.9   24.9   24.3
+O (best in bank)           2.527   11 |  2.240  2.987 |   40.1   20.9   20.6
+
+evaluation banks: fraction of plans whose margin is set by position (not angle): 0.870; median agent share of the squared position error: 0.926

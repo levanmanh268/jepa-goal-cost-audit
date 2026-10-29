@@ -1,0 +1,306 @@
+{
+ "seed": 42000000,
+ "n": 32,
+ "split": "train",
+ "excluded_episodes": [
+  1021,
+  1941,
+  2288,
+  2466,
+  3108,
+  3635,
+  3665,
+  4828,
+  4859,
+  5586,
+  5725,
+  6331,
+  7913,
+  10136,
+  10157,
+  10308,
+  10673,
+  10710,
+  12404,
+  12440,
+  12946,
+  13906,
+  14537,
+  15360,
+  15364,
+  15537,
+  15720,
+  16094,
+  16600,
+  16642,
+  17531,
+  18150
+ ],
+ "episodes": [
+  16171,
+  15338,
+  6435,
+  17698,
+  618,
+  7794,
+  3410,
+  7059,
+  13050,
+  12393,
+  10169,
+  6326,
+  2919,
+  6940,
+  1215,
+  5184,
+  9207,
+  14527,
+  12970,
+  12396,
+  6746,
+  7796,
+  17750,
+  11677,
+  16175,
+  10355,
+  12316,
+  13123,
+  11683,
+  8751,
+  10894,
+  2733
+ ],
+ "starts": [
+  {
+   "k": 0,
+   "val_episode": 16171,
+   "offset": 153,
+   "env_seed": 936311694,
+   "cem_seed": 1061802396
+  },
+  {
+   "k": 1,
+   "val_episode": 15338,
+   "offset": 11,
+   "env_seed": 218553949,
+   "cem_seed": 1970457647
+  },
+  {
+   "k": 2,
+   "val_episode": 6435,
+   "offset": 23,
+   "env_seed": 2033717768,
+   "cem_seed": 1724299539
+  },
+  {
+   "k": 3,
+   "val_episode": 17698,
+   "offset": 96,
+   "env_seed": 1471146766,
+   "cem_seed": 1807215424
+  },
+  {
+   "k": 4,
+   "val_episode": 618,
+   "offset": 114,
+   "env_seed": 88150428,
+   "cem_seed": 535406890
+  },
+  {
+   "k": 5,
+   "val_episode": 7794,
+   "offset": 16,
+   "env_seed": 1603014064,
+   "cem_seed": 563378306
+  },
+  {
+   "k": 6,
+   "val_episode": 3410,
+   "offset": 65,
+   "env_seed": 798200707,
+   "cem_seed": 70185867
+  },
+  {
+   "k": 7,
+   "val_episode": 7059,
+   "offset": 54,
+   "env_seed": 1820949901,
+   "cem_seed": 961625688
+  },
+  {
+   "k": 8,
+   "val_episode": 13050,
+   "offset": 64,
+   "env_seed": 1019220336,
+   "cem_seed": 1730901119
+  },
+  {
+   "k": 9,
+   "val_episode": 12393,
+   "offset": 71,
+   "env_seed": 1288038844,
+   "cem_seed": 832286134
+  },
+  {
+   "k": 10,
+   "val_episode": 10169,
+   "offset": 140,
+   "env_seed": 46506813,
+   "cem_seed": 1192387365
+  },
+  {
+   "k": 11,
+   "val_episode": 6326,
+   "offset": 12,
+   "env_seed": 19295326,
+   "cem_seed": 772693825
+  },
+  {
+   "k": 12,
+   "val_episode": 2919,
+   "offset": 109,
+   "env_seed": 1962476702,
+   "cem_seed": 1378383503
+  },
+  {
+   "k": 13,
+   "val_episode": 6940,
+   "offset": 98,
+   "env_seed": 1883347038,
+   "cem_seed": 1330004185
+  },
+  {
+   "k": 14,
+   "val_episode": 1215,
+   "offset": 32,
+   "env_seed": 92482906,
+   "cem_seed": 2047361890
+  },
+  {
+   "k": 15,
+   "val_episode": 5184,
+   "offset": 72,
+   "env_seed": 1053807141,
+   "cem_seed": 1268092445
+  },
+  {
+   "k": 16,
+   "val_episode": 9207,
+   "offset": 34,
+   "env_seed": 449534648,
+   "cem_seed": 1968869004
+  },
+  {
+   "k": 17,
+   "val_episode": 14527,
+   "offset": 77,
+   "env_seed": 795776160,
+   "cem_seed": 1334857780
+  },
+  {
+   "k": 18,
+   "val_episode": 12970,
+   "offset": 49,
+   "env_seed": 175954138,
+   "cem_seed": 1174395714
+  },
+  {
+   "k": 19,
+   "val_episode": 12396,
+   "offset": 106,
+   "env_seed": 912829131,
+   "cem_seed": 2048450962
+  },
+  {
+   "k": 20,
+   "val_episode": 6746,
+   "offset": 23,
+   "env_seed": 1518396803,
+   "cem_seed": 273569328
+  },
+  {
+   "k": 21,
+   "val_episode": 7796,
+   "offset": 17,
+   "env_seed": 1801387548,
+   "cem_seed": 687324378
+  },
+  {
+   "k": 22,
+   "val_episode": 17750,
+   "offset": 67,
+   "env_seed": 1975350203,
+   "cem_seed": 527865606
+  },
+  {
+   "k": 23,
+   "val_episode": 11677,
+   "offset": 37,
+   "env_seed": 392856124,
+   "cem_seed": 1559453992
+  },
+  {
+   "k": 24,
+   "val_episode": 16175,
+   "offset": 155,
+   "env_seed": 1426089684,
+   "cem_seed": 1444265119
+  },
+  {
+   "k": 25,
+   "val_episode": 10355,
+   "offset": 33,
+   "env_seed": 2006551224,
+   "cem_seed": 1969050376
+  },
+  {
+   "k": 26,
+   "val_episode": 12316,
+   "offset": 37,
+   "env_seed": 490288280,
+   "cem_seed": 1406240638
+  },
+  {
+   "k": 27,
+   "val_episode": 13123,
+   "offset": 45,
+   "env_seed": 1603944781,
+   "cem_seed": 519366325
+  },
+  {
+   "k": 28,
+   "val_episode": 11683,
+   "offset": 30,
+   "env_seed": 1323105067,
+   "cem_seed": 1441114556
+  },
+  {
+   "k": 29,
+   "val_episode": 8751,
+   "offset": 28,
+   "env_seed": 1681383757,
+   "cem_seed": 1687380188
+  },
+  {
+   "k": 30,
+   "val_episode": 10894,
+   "offset": 3,
+   "env_seed": 831205655,
+   "cem_seed": 1731876874
+  },
+  {
+   "k": 31,
+   "val_episode": 2733,
+   "offset": 6,
+   "env_seed": 610181271,
+   "cem_seed": 554838799
+  }
+ ],
+ "train_sha256": {
+  "rel_actions.pth": "99a023838d0a9215848c1640cedf3e53c3ae241cfc5365bc642d508c02dcf53c",
+  "seq_lengths.pkl": "60b98f3e84b05717f088948b895a8c37debc93a0f46f16887bd749fbb87681a1",
+  "states.pth": "e539d89d18637f5d35cf429c13ba04ce9a578d208e3e8a8d93043ea60213042e",
+  "velocities.pth": "b953d994ed736c85ecc64975192d6365be136866656019f76c19d7569f5292b8"
+ },
+ "T": 31
+}

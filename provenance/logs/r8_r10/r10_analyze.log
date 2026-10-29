@@ -1,0 +1,62 @@
+start 0 scored
+start 1 scored
+start 2 scored
+start 3 scored
+start 4 scored
+start 5 scored
+start 6 scored
+start 7 scored
+{
+ "n": 8,
+ "provenance_failures": [],
+ "PRIMARY_VELDROP_Z_vs_B0": {
+  "decision": "SUPPORTED",
+  "D": [
+   -0.3551174505594547,
+   -0.8215967176396868,
+   -0.05126752500168619
+  ],
+  "improved": 3,
+  "worsened": 0,
+  "D_without_most_favourable": -0.1392889337363871,
+  "paired_success_gains_losses": [
+   0,
+   0
+  ]
+ },
+ "SECONDARY_B1_vs_B0_crossmodel_descriptive": {
+  "decision": "DESCRIPTIVE",
+  "D": [
+   -0.1524147915930989,
+   -0.5126994136529313,
+   0.21962024205022512
+  ],
+  "improved": 3,
+  "worsened": 1,
+  "D_without_most_favourable": -0.03106004694370171,
+  "paired_success_gains_losses": [
+   0,
+   0
+  ]
+ },
+ "MECHANISM": {
+  "decision": "NOT_REPLICATED",
+  "mean_spearman_prop_agent": 0.9796417124542123,
+  "mean_spearman_proppos_agent": 0.9679544413919414,
+  "mean_velocity_share_of_prop": 0.015426536533464416
+ },
+ "success_counts": {
+  "B0": 2,
+  "B1": 2,
+  "HPROP10": 2,
+  "HPROP_STD": 2,
+  "TPE": 2,
+  "POW": 2,
+  "FIXEDMASK": 2,
+  "E_B0": 1,
+  "E_B1": 2,
+  "VELDROP_Z": 2,
+  "POS_ONLY": 2,
+  "VELDROP_01": 2
+ }
+}

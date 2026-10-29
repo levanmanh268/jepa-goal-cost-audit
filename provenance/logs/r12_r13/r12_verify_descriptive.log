@@ -1,0 +1,9 @@
+fixed_full-raw: -0.460 [-0.857, -0.145] gains/losses 2/1 agree True
+fixed_pos-raw: -0.629 [-0.991, -0.328] gains/losses 2/1 agree True
+veldrop_z-fixed_pos: -0.867 [-1.590, -0.294] gains/losses 6/0 agree True
+veldrop_z-fixed_full: -1.035 [-1.721, -0.439] gains/losses 6/0 agree True
+fixed_full 2.597 14 agree True
+fixed_pos 2.429 14 agree True
+raw 3.057 13 agree True
+veldrop_z 1.562 20 agree True
+ALL
