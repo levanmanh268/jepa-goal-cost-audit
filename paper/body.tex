@@ -387,7 +387,7 @@ the velocity-related terms matter mainly when proprioception carries a large wei
 \subsection{A second released model}
 \label{sec:r10}
 DINO-WM uses the same frozen DINOv2 encoder, its own predictor, a $\mathrm{Linear}(4\to20)$ proprioceptive encoder, and
-a goal cost of the same form. I locked an unchanged VELDROP-z test on \RTenN{} new training-split goals (fixed banks).
+a goal cost of the same form. I locked an unchanged \mbox{VELDROP-z} test on \RTenN{} new training-split goals (fixed banks).
 \begin{itemize}[leftmargin=*,itemsep=1pt]
 \item \emph{Selection improves slightly, with unchanged successes.} \RTenVZ{} against \RTenBzero{} ($D=\RTenVZD$; \RTenVZImp{} improved,
   \RTenVZWor{} worsened, \RTenUnchanged{} unchanged; sign test $p=\SignRTen$). With five zero differences, a bootstrap
@@ -429,7 +429,7 @@ positive rule.
   chose the direction, so the results are not corrected for multiplicity. On the fresh cohort, two questions were
   pre-declared and a third was added after their analysis; the success differences there have exact McNemar values of
   \RTwQTwoMcN{} (VELDROP-z against the official cost) and \RThMcN{} (position against full under standardisation),
-  uncorrected. Descriptive comparisons of VELDROP-z with either frozen-weight arm also have nominal McNemar $p=0.03125$ (six gains, no losses); these do not provide multiplicity-controlled confirmation.
+  uncorrected. Descriptive comparisons of VELDROP-z with either frozen-weight arm also have nominal McNemar $p=0.0312$ (six gains, no losses); these do not provide multiplicity-controlled confirmation.
 \item \emph{Data.} All evaluation goals, the fresh cohort included, come from training-split trajectories of the
   checkpoints.
 \item \emph{Mechanism scope.} The mechanism needs a goal whose proprioception contains a velocity the criterion ignores
@@ -443,8 +443,8 @@ positive rule.
 
 \section{Conclusion}
 The released JEPA-WM PushT cost penalises a goal-frame velocity that its endpoint success criterion does not require.
-An exact linear decomposition shows that this velocity carries most of the proprioceptive goal energy and has a
-near-zero mean within-bank rank correlation with the final agent distance, while at the official weight of 0.1 the visual term alone selects the same plan in 15 of 16 fixed banks. Keeping the decoded position energy and standardising it against the visual term
+An exact decomposition shows that this velocity carries most of the proprioceptive goal energy and has a
+near-zero mean within-bank rank correlation with the final agent distance, while at the official weight of 0.1 the visual term alone selects the same plan in \RaVisOnlySame{} of \RaVisOnlyN{} fixed banks. Keeping the decoded position energy and standardising it against the visual term
 (VELDROP-z) improved the executed plans of reduced-budget search, first on \RNineN{} goals and then on a fresh cohort of
 \RTwN{} starts, where successes rose from \RTwRawSucc{} to \RTwVZSucc{} with no losses. Standardising the full term
 instead also lowered the margin, but its success counts went from \REightBzeroSucc{} to \REightHstdSucc, from

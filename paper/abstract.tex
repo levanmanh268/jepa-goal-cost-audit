@@ -1,7 +1,7 @@
 Goal observations can contain state variables that a task's success criterion does not ask the agent to reproduce. I
 examine one such case in the released JEPA-WM planner on PushT: its proprioceptive goal cost penalises the velocity
-recorded in the goal frame, although the release's endpoint success criterion ignores velocity. An exact decomposition
-of the cost induced by this linear encoder shows that, on the planner's own candidates, velocity accounts for \DecJVel{} of its energy and has a
+recorded in the goal frame, although the release's endpoint success criterion ignores velocity. Because the proprioceptive
+encoder is linear, this cost decomposes exactly; on the planner's own candidates, velocity accounts for \DecJVel{} of its energy and has a
 mean within-bank rank correlation of \DecJSpVel{} with the final agent distance, against \DecJSpPos{} for the position
 part. Using the model's own encoder, I construct VELDROP-z, which keeps the decoded position energy and standardises it
 against the visual term, without retraining or outcome labels at inference. On a fresh cohort of \RTwN{} starts,
@@ -9,7 +9,7 @@ reduced-budget cross-entropy search with VELDROP-z lowered the mean executed mar
 \RTwVZMargin{} (paired difference \RTwQTwoD{} [\RTwQTwoLo, \RTwQTwoHi]) and raised successes from \RTwRawSucc{} to
 \RTwVZSucc{} with no losses, repeating an earlier result on \RNineN{} goals. The pre-specified primary comparison,
 position against full proprioception at a shared frozen weight, remained uncertain (\RTwQOneD{} [\RTwQOneLo,
-\RTwQOneHi]). An exploratory arm added after that analysis standardised the full term; VELDROP-z gained \RThGain{}
+\RTwQOneHi]). An exploratory arm added after that analysis standardised the full term; \mbox{VELDROP-z} gained \RThGain{}
 successes over it without losses, with an uncertain margin difference (\RThD{} [\RThLo, \RThHi]), and this contrast
 also changes the adaptive weight, so it does not isolate a velocity-only effect. The evaluation uses released
 checkpoints, training-split goals, a reduced search budget and open-loop execution. The results support a scoped
