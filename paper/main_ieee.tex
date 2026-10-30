@@ -4,17 +4,19 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{enumitem}
-\usepackage[hidelinks]{hyperref}
+% Author punctuation preference; IEEEtran layout and class remain unchanged.
 \usepackage{etoolbox}
-\makeatletter
 \patchcmd{\abstract}{---}{- }{}{\PackageError{paper}{Abstract punctuation patch failed}{}}
 \patchcmd{\IEEEkeywords}{---}{- }{}{\PackageError{paper}{Keywords punctuation patch failed}{}}
-\makeatother
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Matching the Wrong Thing: Goal-Frame Velocity in the Planning Cost of a JEPA World Model},
+  pdfauthor={Le Van Manh}, pdfkeywords={world models, JEPA, planning, goal-conditioned planning, cost design}}
 \input{numbers_r8.tex}
 \input{numbers_r6_legacy.tex}
 \input{numbers_extra.tex}
 \input{numbers_r12.tex}
 \input{numbers_r13.tex}
+\input{numbers_v4.tex}
 \newenvironment{widetable}[1][t]{\begin{table*}[#1]}{\end{table*}}
 \newcommand{\auditfigwidth}{\columnwidth}
 
@@ -39,6 +41,5 @@ design, reproducibility
 
 \input{body.tex}
 
-\IEEEtriggeratref{5}
 \input{refs.tex}
 \end{document}

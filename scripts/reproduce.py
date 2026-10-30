@@ -53,10 +53,12 @@ def main():
         parsed = json.loads((out / f'r{n}_analysis.json').read_text())
         assert not parsed['summary']['issues']
     run('independent_r12_r13', ['scripts/audit_r12_r13.py', 'evidence/r12_r13', out / 'independent_r12_r13.json'])
-    for suffix in ['r8', 'extra', 'r12', 'r13']:
+    for suffix in ['r8', 'extra', 'r12', 'r13', 'v4']:
         run('macros_' + suffix, [f'scripts/make_numbers_{suffix}.py', out / f'numbers_{suffix}.tex'])
         identical(out / f'numbers_{suffix}.tex', f'paper/numbers_{suffix}.tex')
     run('figure', ['scripts/make_fig_audit.py', out / 'fig_audit.pdf'])
+    # Figure 2 asserts its per-start counts against the locked R12 analysis before saving.
+    run('figure_fresh', ['scripts/make_fig_fresh.py', out / 'fig_fresh.pdf'])
     # PDF metadata can vary, so figure validation is numerical/render-based, not byte identity.
     receipt['status'] = 'PASS'
     (out / 'REPRODUCTION_RECEIPT.json').write_text(json.dumps(receipt, indent=2) + '\n')

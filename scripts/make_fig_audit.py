@@ -18,7 +18,8 @@ Z = np.load(str(_WM_ROOT / 'r11/r8_proprio_diag.npz'))
 K, N = Z['agent_dist'].shape
 INK, INK2, GRID, S1 = '#0b0b0b', '#52514e', '#e4e3df', '#2a78d6'
 plt.rcParams.update({'font.size': 7, 'axes.edgecolor': INK2, 'axes.labelcolor': INK, 'xtick.color': INK2, 'ytick.color': INK2,
-                     'font.family': 'serif'})
+                     'font.family': 'serif', 'font.serif': ['STIXGeneral'], 'mathtext.fontset': 'stix',
+                     'pdf.fonttype': 42})
 fig, axes = plt.subplots(1, 2, figsize=(3.45, 1.75), sharey=True, constrained_layout=True)
 for ax, part, name in [(axes[0], 'e_pos', 'position part'), (axes[1], 'e_vel', 'velocity part')]:
     xs, ys, rhos = [], [], []
